@@ -54,7 +54,7 @@ class MyAppBar extends React.Component<{ classes }> {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Next.js+TypeScript+Redux+MUI DEMO
+              woolf DEMO
             </Typography>
             <Button color="inherit">Login</Button>
           </Toolbar>

@@ -1,28 +1,32 @@
 import * as d3 from 'd3';
 import * as dagreD3 from 'dagre-d3';
+import { Label } from 'dagre-d3';
 import React from 'react';
 // import isEqual from 'react-fast-compare';
 
-// interface IDagreProps {
-//   nodes: {};
-//   edges: Array<[string, string, {}]>;
-//   zoom: number;
-// }
+export interface INode {
+  name: string;
+  label: Label;
+}
 
-const styles = {
-  edge: {
-    arrowheadStyle: 'fill: #000',
-    style: 'fill: transparent; stroke: #000; stroke-width: 2px; stroke-dasharray: 5, 5;',
-  },
-  node: 'fill: #fff; stroke: #333; stroke-width: 1.5px;',
-};
+export interface IEdge {
+  name: string;
+  targetId: string;
+  value: Label;
+}
 
-class Dagre2 extends React.Component {
-  private node: any;
+interface IDagreProps {
+  nodes: INode[];
+  edges: IEdge[];
+  zoom: number;
+}
+
+class Dagre2 extends React.Component<IDagreProps> {
   // tslint:disable-next-line member-access
   static defaultProps = {
     zoom: '2'
   };
+  private node: any;
 
   // tslint:disable-next-line member-access
   // shouldComponentUpdate(nextProps, _nextState) {
@@ -52,44 +56,14 @@ class Dagre2 extends React.Component {
         return {};
       });
 
-    // Here we"re setting nodeclass, which is used by our custom drawNodes function
-    // below.{ style: "fill: #afa" }
-    g.setNode('0', { label: 'TOP', class: 'type-TOP', style: styles.node });
-    g.setNode('1', { label: 'S', class: 'type-S', style: styles.node});
-    g.setNode('2', { label: 'NP', class: 'type-NP', style: styles.node});
-    g.setNode('3', { label: 'DT', class: 'type-DT', style: styles.node});
-    g.setNode('4', { label: 'This', class: 'type-TK', style: styles.node});
-    g.setNode('5', { label: 'VP', class: 'type-VP', style: styles.node});
-    g.setNode('6', { label: 'VBZ', class: 'type-VBZ', style: styles.node});
-    g.setNode('7', { label: 'is', class: 'type-TK', style: styles.node});
-    g.setNode('8', { label: 'NP', class: 'type-NP', style: styles.node});
-    g.setNode('9', { label: 'DT', class: 'type-DT', style: styles.node});
-    g.setNode('10', { label: 'an', class: 'type-TK', style: styles.node});
-    g.setNode('11', { label: 'NN', class: 'type-NN', style: styles.node});
-    g.setNode('12', { label: 'example', class: 'type-TK', style: styles.node});
-    g.setNode('13', { label: '.', class: 'type-.', style: styles.node});
-    g.setNode('14', { label: 'sentence', class: 'type-TK', style: styles.node});
+    this.props.nodes.forEach((node) => { g.setNode(node.name, node.label); });
 
     g.nodes().forEach(v => {
       const node = g.node(v);
       // Round the corners of the nodes
       node.rx = node.ry = 5;
     });
-    // Set up edges, no special attributes.
-    g.setEdge('3', '4', {...styles.edge});
-    g.setEdge('2', '3', {...styles.edge});
-    g.setEdge('1', '2', {...styles.edge});
-    g.setEdge('6', '7', {...styles.edge});
-    g.setEdge('5', '6', {...styles.edge});
-    g.setEdge('9', '10', {...styles.edge});
-    g.setEdge('8', '9', {...styles.edge});
-    g.setEdge('11', '12', {...styles.edge});
-    g.setEdge('8', '11', {...styles.edge});
-    g.setEdge('5', '8', {...styles.edge});
-    g.setEdge('1', '5', {...styles.edge});
-    g.setEdge('13', '14', {...styles.edge});
-    g.setEdge('1', '13', {...styles.edge});
-    g.setEdge('0', '1', {...styles.edge});
+    this.props.edges.forEach((edge) => g.setEdge(edge.name, edge.targetId, edge.value));
 
     // Create the renderer
     const render = new dagreD3.render();

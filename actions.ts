@@ -47,9 +47,18 @@ export const counterAsyncActionCreators = {
   >('REQUEST_AMOUNT_CHANGING_WITH_SLEEP')
 };
 
+type DagreActionName = 'update';
+
+export type DagreActionCreators = Record<
+  DagreActionName,
+  ActionCreator<IDagreUpdatePayload>
+  > & {
+  update: ActionCreator<IDagreUpdatePayload>;
+};
+
 const dagreActionCreatorFactory = actionCreatorFactory('DAGRE');
 
-interface IDagreUpdatePayload {
+export interface IDagreUpdatePayload {
   nodes: INode[],
   edges: IEdge[],
 }

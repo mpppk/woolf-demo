@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography/Typography';
-import { counterActionCreators } from '../actions';
+import { bindActionCreators } from 'redux';
+import { ActionCreator } from 'typescript-fsa';
+import { counterActionCreators, dagreActionCreators, DagreActionCreators, IDagreUpdatePayload } from '../actions';
 import AppBar from '../components/AppBar';
 import Dagre, { IEdge, INode } from '../components/Dagre';
 import LineChart from '../components/LineChart';
@@ -22,13 +24,10 @@ const data = [
   ]
 ];
 
-const onDagreDidMount = () => {
-  console.log('dagre did mount'); // tslint:disable-line
-};
-
 interface IIndexProps {
   nodes: INode[],
   edges: IEdge[],
+  update: ActionCreator<IDagreUpdatePayload>,
 }
 
 class Index extends React.Component<IIndexProps> {
@@ -37,6 +36,11 @@ class Index extends React.Component<IIndexProps> {
     const { store, isServer } = props.ctx;
     store.dispatch(counterActionCreators.requestAmountChanging({ amount: 1 }));
     return { isServer };
+  }
+
+  constructor(props) {
+    super(props);
+    this.onDagreDidMount = this.onDagreDidMount.bind(this);
   }
 
   // tslint:disable-next-line member-access
@@ -51,18 +55,30 @@ class Index extends React.Component<IIndexProps> {
         <Dagre
           nodes={this.props.nodes}
           edges={this.props.edges}
-          onComponentDidMount={onDagreDidMount}
+          onComponentDidMount={this.onDagreDidMount}
         />
       </div>
     );
   }
+
+  private onDagreDidMount = () => {
+    this.props.update({
+      edges: this.props.edges,
+      nodes: this.props.nodes,
+    });
+  };
 }
 
-const mapStateToProps = (state: State): IIndexProps => {
+const mapStateToProps = (state: State): Partial<IIndexProps> => {
   return {
     edges: state.edges,
-    nodes: state.nodes,
-  }
+    nodes: state.nodes
+  };
 };
 
-export default connect(mapStateToProps)(Index);
+const mapDispatchToProps = (dispatch): DagreActionCreators => {
+  return {
+    ...bindActionCreators({ ...dagreActionCreators }, dispatch) // FIXME
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

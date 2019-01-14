@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import * as dagreD3 from 'dagre-d3';
 import { Label } from 'dagre-d3';
 import React from 'react';
-// import isEqual from 'react-fast-compare';
+import isEqual from 'react-fast-compare';
 
 export interface INode {
   name: string;
@@ -30,27 +30,27 @@ class Dagre extends React.Component<IDagreProps> {
   private node: any;
 
   // tslint:disable-next-line member-access
-  // shouldComponentUpdate(nextProps, _nextState) {
-  //   return (
-  //     !isEqual(this.props.nodes, nextProps.nodes) ||
-  //     !isEqual(this.props.edges, nextProps.edges) ||
-  //     !isEqual(this.props.zoom, nextProps.zoom)
-  //   );
-  // }
+  shouldComponentUpdate(nextProps, _nextState) {
+    return (
+      !isEqual(this.props.nodes, nextProps.nodes) ||
+      !isEqual(this.props.edges, nextProps.edges) ||
+      !isEqual(this.props.zoom, nextProps.zoom)
+    );
+  }
 
   // tslint:disable-next-line member-access
   componentDidMount() {
     this.props.onComponentDidMount();
-    this.renderDag();
+    this.renderGraph();
   }
 
   // tslint:disable-next-line member-access
   componentDidUpdate() {
-    this.renderDag();
+    this.renderGraph();
   }
 
   // tslint:disable-next-line member-access
-  renderDag() {
+  renderGraph() {
     // Create the input graph
     const g = new dagreD3.graphlib.Graph()
       .setGraph({})
@@ -89,9 +89,6 @@ class Dagre extends React.Component<IDagreProps> {
     svg.attr('height', g.graph().height + 40);
     this.node = svg;
   }
-  // private renderDag() {
-  //   const g = new dagreD3.graphlib.Graph().setGraph({});
-  // }
 
   // tslint:disable-next-line member-access
   render() {

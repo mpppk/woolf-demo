@@ -6,6 +6,7 @@ import { counterActionCreators } from '../actions';
 import AppBar from '../components/AppBar';
 import Dagre, { IEdge, INode } from '../components/Dagre';
 import LineChart from '../components/LineChart';
+import { State } from '../reducer';
 
 const data = [
   [
@@ -21,47 +22,16 @@ const data = [
   ]
 ];
 
-const styles = {
-  edge: {
-    arrowheadStyle: 'fill: #000',
-    style:
-      'fill: transparent; stroke: #000; stroke-width: 2px; stroke-dasharray: 5, 5;'
-  },
-  node: 'fill: #fff; stroke: #333; stroke-width: 1.5px;'
-};
-
-const nodes: INode[] = [
-  {
-    label: {
-      class: 'type-TOP',
-      label: 'TOP',
-      style: styles.node
-    },
-    name: '0'
-  },
-  {
-    label: {
-      class: 'type-S',
-      label: 'S',
-      style: styles.node
-    },
-    name: '1'
-  }
-];
-
-const edges: IEdge[] = [
-  {
-    name: '0',
-    targetId: '1',
-    value: { ...styles.edge }
-  }
-];
-
 const onDagreDidMount = () => {
   console.log('dagre did mount'); // tslint:disable-line
 };
 
-class Index extends React.Component {
+interface IIndexProps {
+  nodes: INode[],
+  edges: IEdge[],
+}
+
+class Index extends React.Component<IIndexProps> {
   // tslint:disable-next-line member-access
   static async getInitialProps(props) {
     const { store, isServer } = props.ctx;
@@ -79,14 +49,20 @@ class Index extends React.Component {
         </Typography>
         <LineChart data={data} />
         <Dagre
-          nodes={nodes}
-          edges={edges}
+          nodes={this.props.nodes}
+          edges={this.props.edges}
           onComponentDidMount={onDagreDidMount}
         />
       </div>
     );
-    // return <Page title="Index Page" />;
   }
 }
 
-export default connect()(Index);
+const mapStateToProps = (state: State): IIndexProps => {
+  return {
+    edges: state.edges,
+    nodes: state.nodes,
+  }
+};
+
+export default connect(mapStateToProps)(Index);

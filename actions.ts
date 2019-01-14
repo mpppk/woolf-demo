@@ -1,4 +1,5 @@
 import actionCreatorFactory, { ActionCreator } from 'typescript-fsa';
+import { IEdge, INode } from './components/Dagre';
 
 export interface IRequestAmountChangingPayload {
   amount: number;
@@ -44,4 +45,17 @@ export const counterAsyncActionCreators = {
     IRequestAmountChangingPayload,
     any
   >('REQUEST_AMOUNT_CHANGING_WITH_SLEEP')
+};
+
+const dagreActionCreatorFactory = actionCreatorFactory('DAGRE');
+
+interface IDagreUpdatePayload {
+  nodes: INode[],
+  edges: IEdge[],
+}
+
+export const dagreActionCreators = {
+  update: dagreActionCreatorFactory<IDagreUpdatePayload>(
+    'UPDATE'
+  ),
 };

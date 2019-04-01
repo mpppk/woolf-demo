@@ -7,7 +7,7 @@ import { ActionCreator } from 'typescript-fsa';
 import { JobState } from 'woolf/src/scheduler/scheduler';
 import { counterActionCreators, dagreActionCreators, DagreActionCreators, IDagreUpdatePayload } from '../actions';
 import AppBar from '../components/AppBar';
-import Dagre, { IEdge, INode } from '../components/Dagre';
+import { IEdge, INode } from '../components/Dagre';
 import { Woolf } from '../components/Woolf';
 import { State } from '../reducer';
 
@@ -64,6 +64,18 @@ class Index extends React.Component<IIndexProps> {
           id: 1,
           name: 'another-job',
           state: JobState.Ready,
+          toJobIDs: [2,3],
+        },{
+          fromJobIDs: [1],
+          id: 2,
+          name: 'suspend-job',
+          state: JobState.Suspend,
+          toJobIDs: [],
+        },{
+          fromJobIDs: [2],
+          id: 3,
+          name: 'suspend-job2',
+          state: JobState.Suspend,
           toJobIDs: [],
         }]} update={this.props.update}/>
         {/*<Dagre*/}

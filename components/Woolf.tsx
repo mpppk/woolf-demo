@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import React from 'react';
 import { ActionCreator } from 'typescript-fsa';
-import { IJobStat } from 'woolf/src/scheduler/scheduler';
+import { IJobStat, JobState } from 'woolf/src/scheduler/scheduler';
 import { IDagreUpdatePayload } from '../actions';
 import Dagre, { IEdge, INode } from './Dagre';
 
@@ -40,7 +40,7 @@ const statsToNodesAndEdges = (stats: IJobStat[]): [INode[], IEdge[]] => {
       label: {
         class: 'type-' + stat.name,
         label: stat.name,
-        style: 'fill: #fff; stroke: #333; stroke-width: 1.5px;',
+        style: `fill: ${jobStateToColorCode(stat.state)}; stroke: #333; stroke-width: 1.5px;`,
       },
       name: String(stat.id),
     };
@@ -59,4 +59,15 @@ const statsToNodesAndEdges = (stats: IJobStat[]): [INode[], IEdge[]] => {
     });
   });
   return [nodes, _.flatten(edges)];
+};
+
+const jobStateToColorCode = (jobState: JobState): string => {
+  switch (jobState) {
+    case JobState.Done:
+      return '#45E810';
+    case JobState.Ready:
+      return '#FF9E0F';
+    case JobState.Suspend:
+      return '#4670ff';
+  }
 };

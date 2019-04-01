@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography/Typography';
 import { bindActionCreators } from 'redux';
 import { ActionCreator } from 'typescript-fsa';
+import { JobState } from 'woolf/src/scheduler/scheduler';
 import { counterActionCreators, dagreActionCreators, DagreActionCreators, IDagreUpdatePayload } from '../actions';
 import AppBar from '../components/AppBar';
 import Dagre, { IEdge, INode } from '../components/Dagre';
-import LineChart from '../components/LineChart';
+import { Woolf } from '../components/Woolf';
 import { State } from '../reducer';
 
 const data = [
@@ -51,12 +52,25 @@ class Index extends React.Component<IIndexProps> {
         <Typography variant="h2" gutterBottom={true}>
           Index Page
         </Typography>
-        <LineChart data={data} />
-        <Dagre
-          nodes={this.props.nodes}
-          edges={this.props.edges}
-          onComponentDidMount={this.onDagreDidMount}
-        />
+        {/*<LineChart data={data} />*/}
+        <Woolf stats={[{
+          fromJobIDs: [],
+          id: 0,
+          name: 'some-job',
+          state: JobState.Done,
+          toJobIDs: [1],
+        },{
+          fromJobIDs: [0],
+          id: 1,
+          name: 'another-job',
+          state: JobState.Ready,
+          toJobIDs: [],
+        }]} update={this.props.update}/>
+        {/*<Dagre*/}
+        {/*  nodes={this.props.nodes}*/}
+        {/*  edges={this.props.edges}*/}
+        {/*  onComponentDidMount={this.onDagreDidMount}*/}
+        {/*/>*/}
       </div>
     );
   }

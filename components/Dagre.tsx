@@ -58,7 +58,9 @@ class Dagre extends React.Component<IDagreProps> {
         return {};
       });
 
-    this.props.nodes.forEach((node) => { g.setNode(node.name, node.label); });
+    this.props.nodes.forEach((node) => {
+      g.setNode(node.name, node.label);
+    });
 
     g.nodes().forEach(v => {
       const node = g.node(v);

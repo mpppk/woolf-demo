@@ -1,18 +1,16 @@
 import * as _ from 'lodash';
 import React from 'react';
-import { ActionCreator } from 'typescript-fsa';
 import { IJobStat, JobState } from 'woolf/src/scheduler/scheduler';
-import { IDagreUpdatePayload } from '../actions';
 import Dagre, { IEdge, INode } from './Dagre';
 
 interface IWoolfProps {
   stats: IJobStat[],
-  update: ActionCreator<IDagreUpdatePayload>,
+  // onComponentDidMount: () => void,
 }
 
 // TODO: Woolfをindex.tsxから読み込んで、表示されるかを確認
 // まずは手でwoolf statsを作る
-export class Woolf extends React.Component<IWoolfProps> {
+export class WoolfView extends React.Component<IWoolfProps> {
   // tslint:disable-next-line member-access
   render() {
     const [nodes, edges] = statsToNodesAndEdges(this.props.stats);
@@ -20,18 +18,15 @@ export class Woolf extends React.Component<IWoolfProps> {
       <Dagre
         nodes={nodes}
         edges={edges}
-        onComponentDidMount={this.onDagreDidMount}
+        // onComponentDidMount={this.onDagreDidMount}
       />
     );
   }
 
-  private onDagreDidMount = () => {
-    const [nodes, edges] = statsToNodesAndEdges(this.props.stats);
-    this.props.update({
-      edges,
-      nodes,
-    });
-  };
+  // private onDagreDidMount = () => {
+  //   // const [nodes, edges] = statsToNodesAndEdges(this.props.stats);
+  //   this.props.onComponentDidMount();
+  // };
 }
 
 const statsToNodesAndEdges = (stats: IJobStat[]): [INode[], IEdge[]] => {

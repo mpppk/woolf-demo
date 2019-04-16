@@ -1,37 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography/Typography';
 import { bindActionCreators } from 'redux';
-import { ActionCreator } from 'typescript-fsa';
-import { JobState } from 'woolf/src/scheduler/scheduler';
-import { counterActionCreators, dagreActionCreators, DagreActionCreators, IDagreUpdatePayload } from '../actions';
+import { IJobStat } from 'woolf/src/scheduler/scheduler';
+import {
+  counterActionCreators, WoolfActionCreators,
+  woolfActionCreators
+} from '../actions';
 import AppBar from '../components/AppBar';
-import { IEdge, INode } from '../components/Dagre';
-import { Woolf } from '../components/Woolf';
+import { WoolfView } from '../components/WoolfView';
 import { State } from '../reducer';
 
-const data = [
-  [
-    { x: 0, y: 6 },
-    { x: 1, y: 9 },
-    { x: 2, y: 6 },
-    { x: 3, y: 5 },
-    { x: 4, y: 2 },
-    { x: 6, y: 4 },
-    { x: 7, y: 2 },
-    { x: 8, y: 5 },
-    { x: 9, y: 2 }
-  ]
-];
+type IndexProps = {
+  stats: IJobStat[],
+} & WoolfActionCreators;
 
-interface IIndexProps {
-  nodes: INode[],
-  edges: IEdge[],
-  update: ActionCreator<IDagreUpdatePayload>,
-}
-
-class Index extends React.Component<IIndexProps> {
+class Index extends React.Component<IndexProps> {
   // tslint:disable-next-line member-access
   static async getInitialProps(props) {
     const { store, isServer } = props.ctx;
@@ -41,8 +27,12 @@ class Index extends React.Component<IIndexProps> {
 
   constructor(props) {
     super(props);
-    this.onDagreDidMount = this.onDagreDidMount.bind(this);
+    this.handleClickRunButton = this.handleClickRunButton.bind(this);
   }
+
+  // componentDidMount(): void {
+  //   this.props.updateStats();
+  // }
 
   // tslint:disable-next-line member-access
   render() {
@@ -52,59 +42,35 @@ class Index extends React.Component<IIndexProps> {
         <Typography variant="h2" gutterBottom={true}>
           Index Page
         </Typography>
-        {/*<LineChart data={data} />*/}
-        <Woolf stats={[{
-          fromJobIDs: [],
-          id: 0,
-          name: 'some-job',
-          state: JobState.Done,
-          toJobIDs: [1],
-        },{
-          fromJobIDs: [0],
-          id: 1,
-          name: 'another-job',
-          state: JobState.Ready,
-          toJobIDs: [2,3],
-        },{
-          fromJobIDs: [1],
-          id: 2,
-          name: 'suspend-job',
-          state: JobState.Suspend,
-          toJobIDs: [],
-        },{
-          fromJobIDs: [2],
-          id: 3,
-          name: 'suspend-job2',
-          state: JobState.Suspend,
-          toJobIDs: [],
-        }]} update={this.props.update}/>
-        {/*<Dagre*/}
-        {/*  nodes={this.props.nodes}*/}
-        {/*  edges={this.props.edges}*/}
-        {/*  onComponentDidMount={this.onDagreDidMount}*/}
-        {/*/>*/}
+        <WoolfView stats={this.props.stats}/>
+        <Button variant="contained" onClick={this.handleClickRunButton}>
+          Run
+        </Button>
       </div>
     );
   }
 
-  private onDagreDidMount = () => {
-    this.props.update({
-      edges: this.props.edges,
-      nodes: this.props.nodes,
-    });
-  };
+  private async handleClickRunButton() {
+    // console.log('handleClickRunButton');
+
+    this.props.requestToRun();
+  }
+  // private onDagreDidMount = () => {
+  //   this.props.updateStats({
+  //
+  //   });
+  // };
 }
 
-const mapStateToProps = (state: State): Partial<IIndexProps> => {
+const mapStateToProps = (state: State): Partial<IndexProps> => {
   return {
-    edges: state.edges,
-    nodes: state.nodes
+    stats: state.stats,
   };
 };
 
-const mapDispatchToProps = (dispatch): DagreActionCreators => {
+const mapDispatchToProps = (dispatch): WoolfActionCreators => {
   return {
-    ...bindActionCreators({ ...dagreActionCreators }, dispatch) // FIXME
+    ...bindActionCreators({ ...woolfActionCreators }, dispatch) // FIXME
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

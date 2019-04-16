@@ -1,4 +1,7 @@
 import actionCreatorFactory, { ActionCreator } from 'typescript-fsa';
+import { WoolfEventContext } from 'woolf/src/eventHandlers';
+import { IWoolfData } from 'woolf/src/models';
+import { IJobStat } from 'woolf/src/scheduler/scheduler';
 import { IEdge, INode } from './components/Dagre';
 
 export interface IRequestAmountChangingPayload {
@@ -67,4 +70,41 @@ export const dagreActionCreators = {
   update: dagreActionCreatorFactory<IDagreUpdatePayload>(
     'UPDATE'
   ),
+};
+
+// type WoolfActionName = 'updateStats' | 'requestToRun';
+
+const woolfActionCreatorFactory = actionCreatorFactory('WOOLF');
+
+export interface IWoolfUpdatePayload {
+  stats: IJobStat[],
+}
+
+export type WoolfRequestToRunPayload = undefined;
+
+export interface IWoolfNewEventPayload {
+  stats: IJobStat[];
+  type: string;
+  context: WoolfEventContext;
+}
+
+export const woolfActionCreators = {
+  newEvent: woolfActionCreatorFactory<IWoolfNewEventPayload>('NEW_EVENT'),
+  requestToRun: woolfActionCreatorFactory<WoolfRequestToRunPayload>('REQUEST_TO_RUN'),
+  updateStats: woolfActionCreatorFactory<IWoolfUpdatePayload>(
+    'UPDATE'
+  ),
+};
+export type WoolfActionCreators = typeof woolfActionCreators;
+
+export interface IWoolfRunStartedPayload {
+  payload: IWoolfData,
+}
+
+export interface IWoolfRunDonePayload {
+  results: IWoolfData,
+}
+
+export const woolfAsyncActionCreators = {
+  run: woolfActionCreatorFactory.async<IWoolfRunStartedPayload, IWoolfRunDonePayload, undefined>('RUN')
 };

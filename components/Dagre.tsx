@@ -19,7 +19,7 @@ interface IDagreProps {
   nodes: INode[];
   edges: IEdge[];
   zoom: number;
-  onComponentDidMount: () => void;
+  // onComponentDidMount: () => void;
 }
 
 class Dagre extends React.Component<IDagreProps> {
@@ -40,7 +40,7 @@ class Dagre extends React.Component<IDagreProps> {
 
   // tslint:disable-next-line member-access
   componentDidMount() {
-    this.props.onComponentDidMount();
+    // this.props.onComponentDidMount();
     this.renderGraph();
   }
 

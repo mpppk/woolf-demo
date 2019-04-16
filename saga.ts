@@ -90,23 +90,28 @@ function* watchWoolfRequestToRun() {
 }
 
 const dummyWoolf = async (): Promise<Woolf> => {
-  const countUpLambdaFunction: LambdaFunction = (event, _, cb) => {
-    let newEvents;
-    if (Array.isArray(event)) {
-      newEvents = event;
-    }else{
-      newEvents = [event];
-    }
-
-    const count = newEvents.reduce((a, e) => a + e.count, 1);
-    cb(null, {count});
+  const sleepLambdaFunction: LambdaFunction = (event, _, cb) => {
+    setTimeout(() => {
+      cb(null, event);
+    }, 2000);
   };
+
   const woolf = new Woolf(new Lamool());
   const job0 = woolf.newJob();
-  await job0.addFunc(countUpLambdaFunction);
+  await job0.addFunc(sleepLambdaFunction);
   const job1 = woolf.newJob();
-  await job1.addFunc(countUpLambdaFunction);
+  await job1.addFunc(sleepLambdaFunction);
+  const job2 = woolf.newJob();
+  await job2.addFunc(sleepLambdaFunction);
+  const job3 = woolf.newJob();
+  await job3.addFunc(sleepLambdaFunction);
+  const job4 = woolf.newJob();
+  await job4.addFunc(sleepLambdaFunction);
   woolf.addDependency(job0, job1);
+  woolf.addDependency(job1, job2);
+  woolf.addDependency(job0, job3);
+  woolf.addDependency(job2, job4);
+  woolf.addDependency(job3, job4);
   return woolf;
 };
 

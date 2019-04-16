@@ -46,33 +46,33 @@ const stats: IJobStat[] = [
     id: 0,
     name: 'some-job',
     state: JobState.Done,
-    toJobIDs: [1],
+    toJobIDs: [1]
   },
   {
     fromJobIDs: [0],
     id: 1,
     name: 'another-job',
     state: JobState.Ready,
-    toJobIDs: [2,3],
-  },{
+    toJobIDs: [2, 3]
+  }, {
     fromJobIDs: [1],
     id: 2,
     name: 'suspend-job',
     state: JobState.Suspend,
-    toJobIDs: [],
-  },{
+    toJobIDs: []
+  }, {
     fromJobIDs: [2],
     id: 3,
     name: 'suspend-job2',
     state: JobState.Suspend,
-    toJobIDs: [],
+    toJobIDs: []
   }
 ];
 
 export const exampleInitialState = {
   count: 0,
   stats,
-  woolf: new Woolf(new Lamool()),
+  woolf: new Woolf(new Lamool())
 };
 
 export type State = typeof exampleInitialState;
@@ -97,20 +97,20 @@ const reducer = reducerWithInitialState(exampleInitialState)
   .case(
     dagreActionCreators.update,
     (state, payload) => {
-      return {...state, nodes: payload.nodes, edges: payload.edges};
+      return { ...state, nodes: payload.nodes, edges: payload.edges };
     }
   )
   .case(
     woolfActionCreators.updateStats,
     (state, payload) => {
-      return {...state, stats: payload.stats};
+      return { ...state, stats: payload.stats };
+    }
+  )
+  .case( // FIXME merge to updateStats action
+    woolfActionCreators.newEvent,
+    (state, payload) => {
+      return { ...state, stats: payload.stats };
     }
   );
-  // .case(
-  //   woolfActionCreators.requestToRun,
-  //   (state, payload) => {
-  //     return {...state, woolf: payload.woolf}
-  //   }
-  // );
 
 export default reducer;

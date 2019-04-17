@@ -4,12 +4,10 @@ import { IJobStat, JobState } from 'woolf/src/scheduler/scheduler';
 import Dagre, { IEdge, INode } from './Dagre';
 
 interface IWoolfProps {
-  stats: IJobStat[],
+  stats: IJobStat[];
   // onComponentDidMount: () => void,
 }
 
-// TODO: Woolfをindex.tsxから読み込んで、表示されるかを確認
-// まずは手でwoolf statsを作る
 export class WoolfView extends React.Component<IWoolfProps> {
   // tslint:disable-next-line member-access
   render() {
@@ -30,26 +28,29 @@ export class WoolfView extends React.Component<IWoolfProps> {
 }
 
 const statsToNodesAndEdges = (stats: IJobStat[]): [INode[], IEdge[]] => {
-  const nodes: INode[] = stats.map((stat) => {
+  const nodes: INode[] = stats.map(stat => {
     return {
       label: {
         class: 'type-' + stat.name,
-        label: stat.name,
-        style: `fill: ${jobStateToColorCode(stat.state)}; stroke: #333; stroke-width: 1.5px;`,
+        label: `${stat.name}(${stat.state})`,
+        style: `fill: ${jobStateToColorCode(
+          stat.state
+        )}; stroke: #333; stroke-width: 1.5px;`
       },
-      name: String(stat.id),
+      name: String(stat.id)
     };
   });
 
-  const edges: IEdge[][] = stats.map((stat) => {
-    return stat.toJobIDs.map((toJobID) => {
+  const edges: IEdge[][] = stats.map(stat => {
+    return stat.toJobIDs.map(toJobID => {
       return {
         name: String(stat.id),
         targetId: String(toJobID),
         value: {
           arrowheadStyle: 'fill: #000',
-          style: 'fill: transparent; stroke: #000; stroke-width: 2px; stroke-dasharray: 5, 5;'
-        },
+          style:
+            'fill: transparent; stroke: #000; stroke-width: 2px; stroke-dasharray: 5, 5;'
+        }
       };
     });
   });
@@ -59,9 +60,11 @@ const statsToNodesAndEdges = (stats: IJobStat[]): [INode[], IEdge[]] => {
 const jobStateToColorCode = (jobState: JobState): string => {
   switch (jobState) {
     case JobState.Done:
-      return '#45E810';
+      return '#a0ffb3';
     case JobState.Ready:
       return '#FF9E0F';
+    case JobState.Processing:
+      return '#45E810';
     case JobState.Suspend:
       return '#4670ff';
   }

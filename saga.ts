@@ -4,12 +4,18 @@ import es6promise from 'es6-promise';
 import 'isomorphic-unfetch';
 import { LambdaFunction } from 'lamool/src/lambda';
 import { Lamool } from 'lamool/src/lamool';
-import { delay, eventChannel, SagaIterator } from 'redux-saga';
-import { all, call, fork, put, take, takeEvery } from 'redux-saga/effects';
-import { bindAsyncAction } from 'typescript-fsa-redux-saga';
+import { eventChannel, SagaIterator } from 'redux-saga';
 import {
-  IWoolfEventHandlers,
-} from 'woolf/src/eventHandlers';
+  all,
+  call,
+  delay,
+  fork,
+  put,
+  take,
+  takeEvery
+} from 'redux-saga/effects';
+import { bindAsyncAction } from 'typescript-fsa-redux-saga';
+import { IWoolfEventHandlers } from 'woolf/src/eventHandlers';
 import { Woolf } from 'woolf/src/woolf';
 import {
   counterActionCreators,
@@ -34,9 +40,11 @@ function* watchIncrementAsync() {
 }
 
 // FIXME add type to emitter
-const createWoolfEventChannelHandler: (emitter: any) => IWoolfEventHandlers = (emitter: any) => {
+const createWoolfEventChannelHandler: (emitter: any) => IWoolfEventHandlers = (
+  emitter: any
+) => {
   const contextEmitHandler = (type, context) => {
-    emitter({type, context});
+    emitter({ type, context });
   };
   return {
     addFunc: [contextEmitHandler],
@@ -48,7 +56,7 @@ const createWoolfEventChannelHandler: (emitter: any) => IWoolfEventHandlers = (e
     start: [contextEmitHandler],
     startFunc: [contextEmitHandler],
     startJob: [contextEmitHandler]
-  }
+  };
 };
 
 function* woolfEventHandlerChannel(woolf: Woolf) {
@@ -60,11 +68,11 @@ function* woolfEventHandlerChannel(woolf: Woolf) {
   });
 }
 
-const woolfRunWorker = bindAsyncAction(
-  woolfAsyncActionCreators.run
-)(function*({payload}): SagaIterator {
+const woolfRunWorker = bindAsyncAction(woolfAsyncActionCreators.run)(function*({
+  payload
+}): SagaIterator {
   const woolf = yield call(dummyWoolf);
-  yield put(woolfActionCreators.updateStats({stats: woolf.stats()}));
+  yield put(woolfActionCreators.updateStats({ stats: woolf.stats() }));
   yield fork(watchWoolfJobUpdate, woolf);
   return yield call(woolf.run.bind(woolf), payload);
 });
@@ -72,21 +80,26 @@ const woolfRunWorker = bindAsyncAction(
 function* watchWoolfJobUpdate(woolf: Woolf) {
   const chan = yield call(woolfEventHandlerChannel, woolf);
   while (true) {
-    const {type, context} = yield take(chan);
-    yield put(woolfActionCreators.newEvent({
-      context,
-      stats: woolf.stats(),
-      type,
-    }))
+    const { type, context } = yield take(chan);
+    yield put(
+      woolfActionCreators.newEvent({
+        context,
+        stats: woolf.stats(),
+        type
+      })
+    );
   }
 }
 
 function* watchWoolfRequestToRun() {
-  function* worker({payload}) {
-    const p = {...payload, count: 0};
-    yield call(woolfRunWorker, {payload: p});
+  function* worker({ payload }) {
+    const p = { ...payload, count: 0 };
+    yield call(woolfRunWorker, { payload: p });
   }
-  yield takeEvery<ReturnType<typeof woolfActionCreators.requestToRun>>(woolfActionCreators.requestToRun, worker);
+  yield takeEvery<ReturnType<typeof woolfActionCreators.requestToRun>>(
+    woolfActionCreators.requestToRun,
+    worker
+  );
 }
 
 const dummyWoolf = async (): Promise<Woolf> => {

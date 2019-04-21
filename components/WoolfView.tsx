@@ -5,6 +5,8 @@ import Dagre, { IEdge, INode } from './Dagre';
 
 interface IWoolfProps {
   stats: IJobStat[];
+  width: number;
+  height: number;
   // onComponentDidMount: () => void,
 }
 
@@ -14,6 +16,8 @@ export class WoolfView extends React.Component<IWoolfProps> {
     const [nodes, edges] = statsToNodesAndEdges(this.props.stats);
     return (
       <Dagre
+        width={this.props.width}
+        height={this.props.height}
         nodes={nodes}
         edges={edges}
         // onComponentDidMount={this.onDagreDidMount}

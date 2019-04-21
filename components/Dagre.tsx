@@ -19,6 +19,8 @@ interface IDagreProps {
   nodes: INode[];
   edges: IEdge[];
   zoom: number;
+  width: number;
+  height: number;
   // onComponentDidMount: () => void;
 }
 
@@ -58,7 +60,7 @@ class Dagre extends React.Component<IDagreProps> {
         return {};
       });
 
-    this.props.nodes.forEach((node) => {
+    this.props.nodes.forEach(node => {
       g.setNode(node.name, node.label);
     });
 
@@ -67,7 +69,9 @@ class Dagre extends React.Component<IDagreProps> {
       // Round the corners of the nodes
       node.rx = node.ry = 5;
     });
-    this.props.edges.forEach((edge) => g.setEdge(edge.name, edge.targetId, edge.value));
+    this.props.edges.forEach(edge =>
+      g.setEdge(edge.name, edge.targetId, edge.value)
+    );
 
     // Create the renderer
     const render = new dagreD3.render();
@@ -75,8 +79,8 @@ class Dagre extends React.Component<IDagreProps> {
     // Set up an SVG group so that we can translate the final graph.
     const svg = d3
       .select(this.node)
-      .attr('width', 600)
-      .attr('height', 300);
+      .attr('width', this.props.width)
+      .attr('height', this.props.height);
     const svgGroup = svg.append('g');
     const helloGroup = svg.append('hello');
     helloGroup.text('hello!');
@@ -94,7 +98,7 @@ class Dagre extends React.Component<IDagreProps> {
 
   // tslint:disable-next-line member-access
   render() {
-    return <svg ref={node => (this.node = node)}/>;
+    return <svg ref={node => (this.node = node)} />;
   }
 }
 

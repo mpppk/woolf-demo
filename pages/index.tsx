@@ -6,7 +6,8 @@ import Typography from '@material-ui/core/Typography/Typography';
 import { bindActionCreators } from 'redux';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
 import {
-  counterActionCreators, WoolfActionCreators,
+  counterActionCreators,
+  WoolfActionCreators,
   woolfActionCreators
 } from '../actions';
 import AppBar from '../components/AppBar';
@@ -14,7 +15,7 @@ import { WoolfView } from '../components/WoolfView';
 import { State } from '../reducer';
 
 type IndexProps = {
-  stats: IJobStat[],
+  stats: IJobStat[];
 } & WoolfActionCreators;
 
 class Index extends React.Component<IndexProps> {
@@ -42,7 +43,7 @@ class Index extends React.Component<IndexProps> {
         <Typography variant="h2" gutterBottom={true}>
           Index Page
         </Typography>
-        <WoolfView stats={this.props.stats}/>
+        <WoolfView width={800} height={500} stats={this.props.stats} />
         <Button variant="contained" onClick={this.handleClickRunButton}>
           Run
         </Button>
@@ -64,7 +65,7 @@ class Index extends React.Component<IndexProps> {
 
 const mapStateToProps = (state: State): Partial<IndexProps> => {
   return {
-    stats: state.stats,
+    stats: state.stats
   };
 };
 
@@ -73,4 +74,7 @@ const mapDispatchToProps = (dispatch): WoolfActionCreators => {
     ...bindActionCreators({ ...woolfActionCreators }, dispatch) // FIXME
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Index);

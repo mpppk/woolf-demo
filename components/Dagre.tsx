@@ -1,8 +1,11 @@
 import * as d3 from 'd3';
+// import {zoom} from 'd3-zoom';
 import * as dagreD3 from 'dagre-d3';
 import { Label } from 'dagre-d3';
 import React from 'react';
 import isEqual from 'react-fast-compare';
+
+const getEvent = () => require('d3-selection').event;
 
 export interface INode {
   name: string;
@@ -82,8 +85,8 @@ class Dagre extends React.Component<IDagreProps> {
       .attr('width', this.props.width)
       .attr('height', this.props.height);
     const svgGroup = svg.append('g');
-    const helloGroup = svg.append('hello');
-    helloGroup.text('hello!');
+    // const helloGroup = svg.append('hello');
+    // helloGroup.text('hello!');
 
     // Run the renderer. This is what draws the final graph.
     const selector = svg.select('g');
@@ -93,6 +96,14 @@ class Dagre extends React.Component<IDagreProps> {
     const xCenterOffset = (width - g.graph().width) / 2;
     svgGroup.attr('transform', 'translate(' + xCenterOffset + ', 20)');
     svg.attr('height', g.graph().height + 40);
+
+    // Set up zoom support
+    const onZoom = d3.zoom().on('zoom', () => {
+      // console.log('zoom');
+      selector.attr('transform', getEvent().transform);
+    });
+    svg.call(onZoom);
+
     this.node = svg;
   }
 

@@ -4,6 +4,7 @@ import es6promise from 'es6-promise';
 import 'isomorphic-unfetch';
 import { LambdaFunction } from 'lamool/src/lambda';
 import { Lamool } from 'lamool/src/lamool';
+import { map } from 'p-iteration';
 import { eventChannel, SagaIterator } from 'redux-saga';
 import {
   all,
@@ -110,21 +111,19 @@ const dummyWoolf = async (): Promise<Woolf> => {
   };
 
   const woolf = new Woolf(new Lamool());
-  const job0 = woolf.newJob();
-  await job0.addFunc(sleepLambdaFunction);
-  const job1 = woolf.newJob();
-  await job1.addFunc(sleepLambdaFunction);
-  const job2 = woolf.newJob();
-  await job2.addFunc(sleepLambdaFunction);
-  const job3 = woolf.newJob();
-  await job3.addFunc(sleepLambdaFunction);
-  const job4 = woolf.newJob();
-  await job4.addFunc(sleepLambdaFunction);
-  woolf.addDependency(job0, job1);
-  woolf.addDependency(job1, job2);
-  woolf.addDependency(job0, job3);
-  woolf.addDependency(job2, job4);
-  woolf.addDependency(job3, job4);
+
+  const jobs = await map([...Array(12)], async () => {
+    const job = woolf.newJob();
+    await job.addFunc(sleepLambdaFunction);
+    return job;
+  });
+
+  const firstJob = jobs.shift();
+  const lastJob = jobs.pop();
+  jobs.forEach(job => {
+    woolf.addDependency(firstJob, job);
+    woolf.addDependency(job, lastJob);
+  });
   return woolf;
 };
 

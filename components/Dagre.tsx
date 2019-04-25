@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-// import {zoom} from 'd3-zoom';
 import * as dagreD3 from 'dagre-d3';
 import { Label } from 'dagre-d3';
 import React from 'react';
@@ -7,9 +6,16 @@ import isEqual from 'react-fast-compare';
 
 const getEvent = () => require('d3-selection').event;
 
+export interface ICluster {
+  name: string;
+  label: Label;
+  clusterLabelPos: 'top' | 'bottom' | 'left' | 'right'; // FIXME
+}
+
 export interface INode {
   name: string;
   label: Label;
+  parent: string;
 }
 
 export interface IEdge {
@@ -19,6 +25,7 @@ export interface IEdge {
 }
 
 interface IDagreProps {
+  clusters: ICluster[];
   nodes: INode[];
   edges: IEdge[];
   zoom: number;
@@ -57,14 +64,22 @@ class Dagre extends React.Component<IDagreProps> {
   // tslint:disable-next-line member-access
   renderGraph() {
     // Create the input graph
-    const g = new dagreD3.graphlib.Graph()
+    const g = new dagreD3.graphlib.Graph({ compound: true })
       .setGraph({})
       .setDefaultEdgeLabel(() => {
         return {};
       });
 
+    this.props.clusters.forEach(cluster => {
+      g.setNode(cluster.name, {
+        ...cluster.label,
+        clusterLabelPos: cluster.clusterLabelPos
+      });
+    });
+
     this.props.nodes.forEach(node => {
       g.setNode(node.name, node.label);
+      g.setParent(node.name, node.parent);
     });
 
     g.nodes().forEach(v => {

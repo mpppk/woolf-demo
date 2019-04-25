@@ -112,7 +112,7 @@ const dummyWoolf = async (): Promise<Woolf> => {
 
   const woolf = new Woolf(new Lamool());
 
-  const jobs = await map([...Array(12)], async () => {
+  const jobs = await map([...Array(16)], async () => {
     const job = woolf.newJob();
     await job.addFunc(sleepLambdaFunction);
     return job;

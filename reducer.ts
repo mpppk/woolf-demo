@@ -1,8 +1,14 @@
 import { Lamool } from 'lamool/src/lamool';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
+import { JobFuncState } from 'woolf/src/job';
 import { IJobStat, JobState } from 'woolf/src/scheduler/scheduler';
 import { Woolf } from 'woolf/src/woolf';
-import { counterActionCreators, counterAsyncActionCreators, dagreActionCreators, woolfActionCreators } from './actions';
+import {
+  counterActionCreators,
+  counterAsyncActionCreators,
+  dagreActionCreators,
+  woolfActionCreators
+} from './actions';
 
 // const styles = {
 //   edge: {
@@ -43,6 +49,12 @@ import { counterActionCreators, counterAsyncActionCreators, dagreActionCreators,
 const stats: IJobStat[] = [
   {
     fromJobIDs: [] as number[],
+    funcs: [
+      {
+        FunctionName: 'test-func01',
+        state: JobFuncState.Done
+      } as any
+    ],
     id: 0,
     name: 'some-job',
     state: JobState.Done,
@@ -50,18 +62,42 @@ const stats: IJobStat[] = [
   },
   {
     fromJobIDs: [0],
+    funcs: [
+      {
+        FunctionName: 'test-func01',
+        state: JobFuncState.Ready
+      } as any,
+      {
+        FunctionName: 'test-func06',
+        state: JobFuncState.Done
+      } as any
+    ],
     id: 1,
     name: 'another-job',
     state: JobState.Ready,
     toJobIDs: [2, 3]
-  }, {
+  },
+  {
     fromJobIDs: [1],
+    funcs: [
+      {
+        FunctionName: 'test-func01',
+        state: JobFuncState.Done
+      } as any
+    ],
     id: 2,
     name: 'suspend-job',
     state: JobState.Suspend,
     toJobIDs: []
-  }, {
+  },
+  {
     fromJobIDs: [2],
+    funcs: [
+      {
+        FunctionName: 'test-func01',
+        state: JobFuncState.Done
+      } as any
+    ],
     id: 3,
     name: 'suspend-job2',
     state: JobState.Suspend,
@@ -94,19 +130,20 @@ const reducer = reducerWithInitialState(exampleInitialState)
       return addCount(state, payload.result.amount);
     }
   )
-  .case(
-    dagreActionCreators.update,
-    (state, payload) => {
-      return { ...state, nodes: payload.nodes, edges: payload.edges };
+  .case(dagreActionCreators.update, (state, payload) => {
+    return { ...state, nodes: payload.nodes, edges: payload.edges };
+  })
+  .case(woolfActionCreators.updateStats, (state, payload) => {
+    const noFuncsStat = state.stats.find(
+      stat => !stat.funcs || stat.funcs.length <= 0
+    );
+    if (noFuncsStat) {
+      return { ...state };
     }
-  )
+    return { ...state, stats: payload.stats };
+  })
   .case(
-    woolfActionCreators.updateStats,
-    (state, payload) => {
-      return { ...state, stats: payload.stats };
-    }
-  )
-  .case( // FIXME merge to updateStats action
+    // FIXME merge to updateStats action
     woolfActionCreators.newEvent,
     (state, payload) => {
       return { ...state, stats: payload.stats };

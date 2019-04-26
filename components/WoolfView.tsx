@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import React from 'react';
-import { JobFuncStat } from 'woolf/src/job';
+import { JobFuncStat, JobFuncState } from 'woolf/src/job';
 import { IJobStat, JobState } from 'woolf/src/scheduler/scheduler';
 import Dagre, { ICluster, IEdge, INode } from './Dagre';
 
@@ -91,8 +91,8 @@ const statsToClustersAndNodesAndEdges = (
           label: {
             class: 'node-' + toNodeName(stat, funcStat),
             label: `${funcStat.FunctionName}(${funcStat.state})`,
-            style: `fill: ${jobStateToColorCode(
-              stat.state
+            style: `fill: ${funcStateToColorCode(
+              funcStat.state
             )}; stroke: #333; stroke-width: 1.5px;`
           },
           name: toNodeName(stat, funcStat),
@@ -144,5 +144,16 @@ const jobStateToColorCode = (jobState: JobState): string => {
       return '#45E810';
     case JobState.Suspend:
       return '#4670ff';
+  }
+};
+
+const funcStateToColorCode = (state: JobFuncState): string => {
+  switch (state) {
+    case JobFuncState.Done:
+      return '#a0ffb3';
+    case JobFuncState.Ready:
+      return '#FF9E0F';
+    case JobFuncState.Processing:
+      return '#45E810';
   }
 };

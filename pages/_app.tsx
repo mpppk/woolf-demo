@@ -26,6 +26,15 @@ class MyApp extends App {
     this.pageContext = getPageContext();
   }
 
+  // tslint:disable-next-line member-access
+  componentDidMount() {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
+  }
+
   public render() {
     // @ts-ignore
     const { Component, pageProps, store } = this.props;

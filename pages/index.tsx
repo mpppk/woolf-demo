@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography/Typography';
 import { bindActionCreators } from 'redux';
+import { JobFuncStat } from 'woolf/src/job';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
 import {
   counterActionCreators,
+  IUpdateCurrentStatPayload,
   WoolfActionCreators,
   woolfActionCreators
 } from '../actions';
@@ -16,6 +18,7 @@ import { State } from '../reducer';
 
 type IndexProps = {
   stats: IJobStat[];
+  currentStat: IUpdateCurrentStatPayload;
 } & WoolfActionCreators;
 
 class Index extends React.Component<IndexProps> {
@@ -29,11 +32,19 @@ class Index extends React.Component<IndexProps> {
   constructor(props) {
     super(props);
     this.handleClickRunButton = this.handleClickRunButton.bind(this);
+    this.handleClickFuncNode = this.handleClickFuncNode.bind(this);
+    this.handleClickJobNode = this.handleClickJobNode.bind(this);
   }
 
-  // componentDidMount(): void {
-  //   this.props.updateStats();
-  // }
+  // tslint:disable-next-line member-access
+  handleClickFuncNode(jobStat: IJobStat, funcStat: JobFuncStat) {
+    this.props.updateCurrentStat({ jobStat, funcStat });
+  }
+
+  // tslint:disable-next-line member-access
+  handleClickJobNode(jobStat: IJobStat) {
+    this.props.updateCurrentStat({ jobStat });
+  }
 
   // tslint:disable-next-line member-access
   render() {
@@ -43,7 +54,13 @@ class Index extends React.Component<IndexProps> {
         <Typography variant="h2" gutterBottom={true}>
           Index Page
         </Typography>
-        <WoolfView width={800} height={500} stats={this.props.stats} />
+        <WoolfView
+          width={800}
+          height={500}
+          stats={this.props.stats}
+          onClickFuncNode={this.handleClickFuncNode}
+          onClickJobNode={this.handleClickJobNode}
+        />
         <Button variant="contained" onClick={this.handleClickRunButton}>
           Run
         </Button>

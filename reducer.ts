@@ -1,12 +1,11 @@
-import { Lamool } from 'lamool/src/lamool';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { JobFuncState } from 'woolf/src/job';
 import { IJobStat, JobState } from 'woolf/src/scheduler/scheduler';
-import { Woolf } from 'woolf/src/woolf';
 import {
   counterActionCreators,
   counterAsyncActionCreators,
   dagreActionCreators,
+  IUpdateCurrentStatPayload,
   woolfActionCreators
 } from './actions';
 
@@ -107,8 +106,11 @@ const stats: IJobStat[] = [
 
 export const exampleInitialState = {
   count: 0,
-  stats,
-  woolf: new Woolf(new Lamool())
+  currentStat: {
+    funcStat: null,
+    jobStat: null
+  } as IUpdateCurrentStatPayload,
+  stats
 };
 
 export type State = typeof exampleInitialState;
@@ -132,6 +134,9 @@ const reducer = reducerWithInitialState(exampleInitialState)
   )
   .case(dagreActionCreators.update, (state, payload) => {
     return { ...state, nodes: payload.nodes, edges: payload.edges };
+  })
+  .case(woolfActionCreators.updateCurrentStat, (state, currentStat) => {
+    return { ...state, currentStat };
   })
   .case(woolfActionCreators.updateStats, (state, payload) => {
     const noFuncsStat = state.stats.find(

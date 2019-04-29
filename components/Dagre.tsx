@@ -31,6 +31,8 @@ interface IDagreProps {
   zoom: number;
   width: number;
   height: number;
+  onClickNode: (node: INode) => void;
+  onClickCluster: (cluster: ICluster) => void;
   // onComponentDidMount: () => void;
 }
 
@@ -40,6 +42,12 @@ class Dagre extends React.Component<IDagreProps> {
     zoom: '2'
   };
   private node: any;
+
+  constructor(props) {
+    super(props);
+    this.handleClickCluster = this.handleClickCluster.bind(this);
+    this.handleClickNode = this.handleClickNode.bind(this);
+  }
 
   // tslint:disable-next-line member-access
   shouldComponentUpdate(nextProps, _nextState) {
@@ -59,6 +67,24 @@ class Dagre extends React.Component<IDagreProps> {
   // tslint:disable-next-line member-access
   componentDidUpdate() {
     this.renderGraph();
+  }
+
+  // tslint:disable-next-line member-access
+  handleClickNode(nodeName: string) {
+    const node = this.props.nodes.find(n => n.name === nodeName);
+    if (node === undefined) {
+      throw new Error('invalid node name is given: ' + nodeName);
+    }
+    this.props.onClickNode(node);
+  }
+
+  // tslint:disable-next-line member-access
+  handleClickCluster(clusterName: string) {
+    const cluster = this.props.clusters.find(n => n.name === clusterName);
+    if (cluster === undefined) {
+      throw new Error('invalid node name is given: ' + clusterName);
+    }
+    this.props.onClickCluster(cluster);
   }
 
   // tslint:disable-next-line member-access
@@ -106,6 +132,15 @@ class Dagre extends React.Component<IDagreProps> {
     // Run the renderer. This is what draws the final graph.
     const selector = svg.select('g');
     render(selector as any, g);
+
+    selector
+      .selectAll('g.cluster')
+      .on('click', (v: string) => this.handleClickCluster(v));
+
+    selector
+      .selectAll('g.node')
+      .on('click', (v: string) => this.handleClickNode(v));
+
     // Center the graph
     const width = parseInt(svg.attr('width'), 10);
     const xCenterOffset = (width - g.graph().width) / 2;

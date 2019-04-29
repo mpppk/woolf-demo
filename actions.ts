@@ -3,6 +3,7 @@ import { WoolfEventContext } from 'woolf/src/eventHandlers';
 import { IWoolfData } from 'woolf/src/models';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
 import { IEdge, INode } from './components/Dagre';
+import { JobFuncStat } from 'woolf/src/job';
 
 export interface IRequestAmountChangingPayload {
   amount: number;
@@ -55,21 +56,19 @@ type DagreActionName = 'update';
 export type DagreActionCreators = Record<
   DagreActionName,
   ActionCreator<IDagreUpdatePayload>
-  > & {
+> & {
   update: ActionCreator<IDagreUpdatePayload>;
 };
 
 const dagreActionCreatorFactory = actionCreatorFactory('DAGRE');
 
 export interface IDagreUpdatePayload {
-  nodes: INode[],
-  edges: IEdge[],
+  nodes: INode[];
+  edges: IEdge[];
 }
 
 export const dagreActionCreators = {
-  update: dagreActionCreatorFactory<IDagreUpdatePayload>(
-    'UPDATE'
-  ),
+  update: dagreActionCreatorFactory<IDagreUpdatePayload>('UPDATE')
 };
 
 // type WoolfActionName = 'updateStats' | 'requestToRun';
@@ -77,7 +76,7 @@ export const dagreActionCreators = {
 const woolfActionCreatorFactory = actionCreatorFactory('WOOLF');
 
 export interface IWoolfUpdatePayload {
-  stats: IJobStat[],
+  stats: IJobStat[];
 }
 
 export type WoolfRequestToRunPayload = undefined;
@@ -88,23 +87,35 @@ export interface IWoolfNewEventPayload {
   context: WoolfEventContext;
 }
 
+export interface IUpdateCurrentStatPayload {
+  jobStat: IJobStat;
+  funcStat?: JobFuncStat;
+}
+
 export const woolfActionCreators = {
   newEvent: woolfActionCreatorFactory<IWoolfNewEventPayload>('NEW_EVENT'),
-  requestToRun: woolfActionCreatorFactory<WoolfRequestToRunPayload>('REQUEST_TO_RUN'),
-  updateStats: woolfActionCreatorFactory<IWoolfUpdatePayload>(
-    'UPDATE'
+  requestToRun: woolfActionCreatorFactory<WoolfRequestToRunPayload>(
+    'REQUEST_TO_RUN'
   ),
+  updateCurrentStat: woolfActionCreatorFactory<IUpdateCurrentStatPayload>(
+    'UPDATE_CURRENT_STAT'
+  ),
+  updateStats: woolfActionCreatorFactory<IWoolfUpdatePayload>('UPDATE')
 };
 export type WoolfActionCreators = typeof woolfActionCreators;
 
 export interface IWoolfRunStartedPayload {
-  payload: IWoolfData,
+  payload: IWoolfData;
 }
 
 export interface IWoolfRunDonePayload {
-  results: IWoolfData,
+  results: IWoolfData;
 }
 
 export const woolfAsyncActionCreators = {
-  run: woolfActionCreatorFactory.async<IWoolfRunStartedPayload, IWoolfRunDonePayload, undefined>('RUN')
+  run: woolfActionCreatorFactory.async<
+    IWoolfRunStartedPayload,
+    IWoolfRunDonePayload,
+    undefined
+  >('RUN')
 };

@@ -27,6 +27,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-fast-compare": "^2.0.4",
+    "react-jss": "^8.6.1",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "redux-saga": "1.0.2",
@@ -34,7 +35,8 @@
     "typescript-fsa": "^3.0.0-beta-2",
     "typescript-fsa-reducers": "^1.1.0",
     "typescript-fsa-redux-saga": "^1.1.1",
-    "woolf": "0.0.6"
+    "woolf": "0.0.6",
+    "styled-jsx": "latest"
   },
   "devDependencies": {
     "@types/d3": "^5.5.0",
@@ -44,6 +46,7 @@
     "@types/next": "^7.0.1",
     "@types/react": "^16.4.16",
     "@types/react-dom": "16.0.8",
+    "@types/react-jss": "^8.6.3",
     "@types/react-redux": "^6.0.11",
     "husky": "^1.2.1",
     "jest": "^23.6.0",

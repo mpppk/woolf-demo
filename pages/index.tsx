@@ -13,6 +13,7 @@ import {
   woolfActionCreators
 } from '../actions';
 import AppBar from '../components/AppBar';
+import { WoolfStatView } from '../components/WoolfStatView';
 import { WoolfView } from '../components/WoolfView';
 import { State } from '../reducer';
 
@@ -61,6 +62,10 @@ class Index extends React.Component<IndexProps> {
           onClickFuncNode={this.handleClickFuncNode}
           onClickJobNode={this.handleClickJobNode}
         />
+        <WoolfStatView
+          jobStat={this.props.currentStat.jobStat}
+          funcStat={this.props.currentStat.funcStat}
+        />
         <Button variant="contained" onClick={this.handleClickRunButton}>
           Run
         </Button>
@@ -82,6 +87,7 @@ class Index extends React.Component<IndexProps> {
 
 const mapStateToProps = (state: State): Partial<IndexProps> => {
   return {
+    currentStat: state.currentStat,
     stats: state.stats
   };
 };

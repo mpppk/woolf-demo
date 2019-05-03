@@ -3,7 +3,7 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { IJobStat } from 'woolf';
 import { JobFuncStat } from 'woolf/src/job';
 
@@ -12,28 +12,75 @@ interface IWoolfStatProps {
   funcStat: JobFuncStat;
 }
 
-export class WoolfStatView extends React.Component<IWoolfStatProps> {
-  constructor(props) {
-    super(props);
-  }
+const to2ColumnTableRow = (col1: string, col2: string) => {
+  return (
+    <TableRow>
+      <TableCell scope="row">{col1}</TableCell>
+      <TableCell scope="row">{col2}</TableCell>
+    </TableRow>
+  );
+};
 
-  // tslint:disable-next-line member-access
-  render() {
-    return (
-      <Paper>
-        <Table>
-          <TableBody>
-            <TableRow key={0}>
-              <TableCell component="th" scope="row">
-                Job Name
-              </TableCell>
-              <TableCell component="th" scope="row">
-                target-job
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Paper>
-    );
-  }
-}
+const jobStatToJobNameRow = (jobStat: IJobStat) => {
+  const jobName = jobStat && jobStat.name ? jobStat.name : '-';
+  return to2ColumnTableRow('Job Name', jobName);
+};
+
+const jobStatToJobStateRow = (jobStat: IJobStat) => {
+  const jobState = jobStat && jobStat.state ? jobStat.state : '-';
+  return to2ColumnTableRow('Job State', jobState);
+};
+
+const funcStatToFunctionNameRow = (funcStat?: JobFuncStat) => {
+  const functionName =
+    funcStat && funcStat.FunctionName ? funcStat.FunctionName : '-';
+  return to2ColumnTableRow('Function Name', functionName);
+};
+
+const funcStatToFunctionStateRow = (funcStat?: JobFuncStat) => {
+  const functionState = funcStat && funcStat.state ? funcStat.state : '-';
+  return to2ColumnTableRow('Function State', functionState);
+};
+
+const funcStatToFunctionInputPathRow = (funcStat?: JobFuncStat) => {
+  const inputPath = funcStat && funcStat.InputPath ? funcStat.InputPath : '-';
+  return to2ColumnTableRow('InputPath', inputPath);
+};
+
+const funcStatToFunctionOutputPathRow = (funcStat?: JobFuncStat) => {
+  const outputPath =
+    funcStat && funcStat.OutputPath ? funcStat.OutputPath : '-';
+  return to2ColumnTableRow('OutputPath', outputPath);
+};
+
+const funcStatToFunctionResultPathRow = (funcStat?: JobFuncStat) => {
+  const resultPath =
+    funcStat && funcStat.ResultPath ? funcStat.ResultPath : '-';
+  return to2ColumnTableRow('ResultPath', resultPath);
+};
+
+const funcStatToFunctionParameterRow = (funcStat?: JobFuncStat) => {
+  const parameter =
+    funcStat && funcStat.Parameters ? funcStat.Parameters : '{}';
+  return to2ColumnTableRow('Parameters', JSON.stringify(parameter, null, '  '));
+};
+
+// tslint:disable-next-line variable-name
+export const WoolfStatView: FunctionComponent<IWoolfStatProps> = props => {
+  return (
+    <Paper>
+      <Table>
+        <TableBody>
+          {jobStatToJobNameRow(props.jobStat)}
+          {jobStatToJobStateRow(props.jobStat)}
+          {funcStatToFunctionNameRow(props.funcStat)}
+          {funcStatToFunctionStateRow(props.funcStat)}
+          {funcStatToFunctionInputPathRow(props.funcStat)}
+          {funcStatToFunctionOutputPathRow(props.funcStat)}
+          {funcStatToFunctionResultPathRow(props.funcStat)}
+          {funcStatToFunctionParameterRow(props.funcStat)}
+        </TableBody>
+      </Table>
+    </Paper>
+  );
+};

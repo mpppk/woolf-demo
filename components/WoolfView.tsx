@@ -35,6 +35,7 @@ export class WoolfView extends React.Component<IWoolfProps> {
     const [clusters, nodes, edges] = statsToClustersAndNodesAndEdges(
       this.props.stats
     );
+
     return (
       <Dagre
         width={this.props.width}

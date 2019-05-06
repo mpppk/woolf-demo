@@ -1,9 +1,9 @@
 import actionCreatorFactory, { ActionCreator } from 'typescript-fsa';
 import { WoolfEventContext } from 'woolf/src/eventHandlers';
+import { JobFuncStat } from 'woolf/src/job';
 import { IWoolfData } from 'woolf/src/models';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
 import { IEdge, INode } from './components/Dagre';
-import { JobFuncStat } from 'woolf/src/job';
 
 export interface IRequestAmountChangingPayload {
   amount: number;

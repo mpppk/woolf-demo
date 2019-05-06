@@ -3,6 +3,7 @@ import * as dagreD3 from 'dagre-d3';
 import { Label } from 'dagre-d3';
 import React from 'react';
 import isEqual from 'react-fast-compare';
+import { Graph } from '../services/Graph';
 
 const getEvent = () => require('d3-selection').event;
 
@@ -42,6 +43,7 @@ class Dagre extends React.Component<IDagreProps> {
     zoom: '2'
   };
   private node: any;
+  private g: Graph;
 
   constructor(props) {
     super(props);
@@ -51,21 +53,24 @@ class Dagre extends React.Component<IDagreProps> {
 
   // tslint:disable-next-line member-access
   shouldComponentUpdate(nextProps, _nextState) {
-    return (
+    const shouldUpdate =
       !isEqual(this.props.nodes, nextProps.nodes) ||
       !isEqual(this.props.edges, nextProps.edges) ||
-      !isEqual(this.props.zoom, nextProps.zoom)
-    );
+      !isEqual(this.props.zoom, nextProps.zoom);
+    return shouldUpdate;
   }
 
   // tslint:disable-next-line member-access
   componentDidMount() {
-    // this.props.onComponentDidMount();
+    this.g = new Graph(this.props.clusters, this.props.nodes, this.props.edges);
     this.renderGraph();
   }
 
   // tslint:disable-next-line member-access
   componentDidUpdate() {
+    this.g.cluster.sync(this.props.clusters);
+    this.g.node.sync(this.props.nodes);
+    this.g.updateEdges(this.props.edges);
     this.renderGraph();
   }
 
@@ -90,48 +95,19 @@ class Dagre extends React.Component<IDagreProps> {
   // tslint:disable-next-line member-access
   renderGraph() {
     // Create the input graph
-    const g = new dagreD3.graphlib.Graph({ compound: true })
-      .setGraph({})
-      .setDefaultEdgeLabel(() => {
-        return {};
-      });
-
-    this.props.clusters.forEach(cluster => {
-      g.setNode(cluster.name, {
-        ...cluster.label,
-        clusterLabelPos: cluster.clusterLabelPos
-      });
-    });
-
-    this.props.nodes.forEach(node => {
-      g.setNode(node.name, node.label);
-      g.setParent(node.name, node.parent);
-    });
-
-    g.nodes().forEach(v => {
-      const node = g.node(v);
-      // Round the corners of the nodes
-      node.rx = node.ry = 5;
-    });
-    this.props.edges.forEach(edge =>
-      g.setEdge(edge.name, edge.targetId, edge.value)
-    );
 
     // Create the renderer
     const render = new dagreD3.render();
-
     // Set up an SVG group so that we can translate the final graph.
     const svg = d3
       .select(this.node)
       .attr('width', this.props.width)
       .attr('height', this.props.height);
     const svgGroup = svg.append('g');
-    // const helloGroup = svg.append('hello');
-    // helloGroup.text('hello!');
 
     // Run the renderer. This is what draws the final graph.
     const selector = svg.select('g');
-    render(selector as any, g);
+    render(selector as any, this.g.toGraph());
 
     selector
       .selectAll('g.cluster')
@@ -143,13 +119,12 @@ class Dagre extends React.Component<IDagreProps> {
 
     // Center the graph
     const width = parseInt(svg.attr('width'), 10);
-    const xCenterOffset = (width - g.graph().width) / 2;
+    const xCenterOffset = (width - this.g.toGraph().graph().width) / 2;
     svgGroup.attr('transform', 'translate(' + xCenterOffset + ', 20)');
-    svg.attr('height', g.graph().height + 40);
+    svg.attr('height', this.g.toGraph().graph().height + 40);
 
     // Set up zoom support
     const onZoom = d3.zoom().on('zoom', () => {
-      // console.log('zoom');
       selector.attr('transform', getEvent().transform);
     });
     svg.call(onZoom);

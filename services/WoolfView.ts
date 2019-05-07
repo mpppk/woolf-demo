@@ -42,6 +42,17 @@ export const findJobStatByCluster = (
   return stat;
 };
 
+export const copyGraphComponents = <Component extends { label: object }>(
+  components: Component[]
+) => {
+  // FIXME any
+  return components.map(c => ({ ...(c as any), label: { ...c.label } }));
+};
+
+export const copyEdges = (edges: IEdge[]): IEdge[] => {
+  return edges.map(e => ({ ...e, value: { ...e.value } }));
+};
+
 const findJobStatByID = (stats: IJobStat[], id: number) => {
   const jobStat = stats.find(stat => stat.id === id);
   if (jobStat === undefined) {

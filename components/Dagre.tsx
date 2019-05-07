@@ -4,6 +4,7 @@ import { Label } from 'dagre-d3';
 import React from 'react';
 import isEqual from 'react-fast-compare';
 import { Graph } from '../services/Graph';
+import { copyEdges, copyGraphComponents } from '../services/WoolfView';
 
 const getEvent = () => require('d3-selection').event;
 
@@ -68,9 +69,9 @@ class Dagre extends React.Component<IDagreProps> {
 
   // tslint:disable-next-line member-access
   componentDidUpdate() {
-    this.g.cluster.sync(this.props.clusters);
-    this.g.node.sync(this.props.nodes);
-    this.g.updateEdges(this.props.edges);
+    this.g.clusters.sync(copyGraphComponents(this.props.clusters));
+    this.g.nodes.sync(copyGraphComponents(this.props.nodes));
+    this.g.edges.sync(copyEdges(this.props.edges));
     this.renderGraph();
   }
 

@@ -9,42 +9,6 @@ import {
   woolfActionCreators
 } from './actions';
 
-// const styles = {
-//   edge: {
-//     arrowheadStyle: 'fill: #000',
-//     style:
-//       'fill: transparent; stroke: #000; stroke-width: 2px; stroke-dasharray: 5, 5;'
-//   },
-//   node: 'fill: #fff; stroke: #333; stroke-width: 1.5px;'
-// };
-
-// const nodes: INode[] = [
-//   {
-//     label: {
-//       class: 'type-TOP',
-//       label: 'TOP',
-//       style: styles.node
-//     },
-//     name: '0'
-//   },
-//   {
-//     label: {
-//       class: 'type-S',
-//       label: 'S',
-//       style: styles.node
-//     },
-//     name: '1'
-//   }
-// ];
-//
-// const edges: IEdge[] = [
-//   {
-//     name: '0',
-//     targetId: '1',
-//     value: { ...styles.edge }
-//   }
-// ];
-
 const stats: IJobStat[] = [
   {
     fromJobIDs: [] as number[],
@@ -146,13 +110,6 @@ const reducer = reducerWithInitialState(exampleInitialState)
       return { ...state };
     }
     return { ...state, stats: payload.stats };
-  })
-  .case(
-    // FIXME merge to updateStats action
-    woolfActionCreators.newEvent,
-    (state, payload) => {
-      return { ...state, stats: payload.stats };
-    }
-  );
+  });
 
 export default reducer;

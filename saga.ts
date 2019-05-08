@@ -13,7 +13,8 @@ import {
   fork,
   put,
   take,
-  takeEvery
+  takeEvery,
+  takeLatest
 } from 'redux-saga/effects';
 import { bindAsyncAction } from 'typescript-fsa-redux-saga';
 import { IWoolfEventHandlers } from 'woolf/src/eventHandlers';
@@ -38,6 +39,14 @@ function* watchIncrementAsync() {
   yield takeEvery(counterActionCreators.clickAsyncIncrementButton.type, () =>
     counterIncrementWorker({ amount: 1, sleep: 1000 })
   );
+}
+
+function* watchWoolfNewEvent() {
+  function* worker(action) {
+    yield delay(300); // FIXME pick up wait time from state
+    yield put(woolfActionCreators.updateStats({ stats: action.payload.stats }));
+  }
+  yield takeLatest(woolfActionCreators.newEvent.type, worker);
 }
 
 // FIXME add type to emitter
@@ -97,6 +106,7 @@ function* watchWoolfRequestToRun() {
     const p = { ...payload, count: 0 };
     yield call(woolfRunWorker, { payload: p });
   }
+
   yield takeEvery<ReturnType<typeof woolfActionCreators.requestToRun>>(
     woolfActionCreators.requestToRun,
     worker
@@ -128,5 +138,9 @@ const dummyWoolf = async (): Promise<Woolf> => {
 };
 
 export default function* rootSaga() {
-  yield all([watchIncrementAsync(), watchWoolfRequestToRun()]);
+  yield all([
+    watchIncrementAsync(),
+    watchWoolfRequestToRun(),
+    watchWoolfNewEvent()
+  ]);
 }

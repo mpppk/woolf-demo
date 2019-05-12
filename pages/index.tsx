@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
-
 import { Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography/Typography';
+import dynamic from 'next/dynamic';
+import React from 'react';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { JobFuncStat } from 'woolf/src/job';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
@@ -16,6 +16,11 @@ import AppBar from '../components/AppBar';
 import { WoolfStatView } from '../components/WoolfStatView';
 import { WoolfView } from '../components/WoolfView';
 import { State } from '../reducer';
+
+// tslint:disable-next-line
+const FunctionEditor = dynamic(import('../components/FunctionEditor'), {
+  ssr: false
+});
 
 type IndexProps = {
   stats: IJobStat[];
@@ -49,6 +54,13 @@ class Index extends React.Component<IndexProps> {
 
   // tslint:disable-next-line member-access
   render() {
+    const someJs = [
+      "import {myCoolFunc} from './utils'",
+      'export default async () => {',
+      '  await myCoolFunc()',
+      '}'
+    ].join('\n');
+
     return (
       <div>
         <AppBar />
@@ -69,20 +81,14 @@ class Index extends React.Component<IndexProps> {
         <Button variant="contained" onClick={this.handleClickRunButton}>
           Run
         </Button>
+        <FunctionEditor language="javascript" value={someJs} />
       </div>
     );
   }
 
   private async handleClickRunButton() {
-    // console.log('handleClickRunButton');
-
     this.props.requestToRun();
   }
-  // private onDagreDidMount = () => {
-  //   this.props.updateStats({
-  //
-  //   });
-  // };
 }
 
 const mapStateToProps = (state: State): Partial<IndexProps> => {

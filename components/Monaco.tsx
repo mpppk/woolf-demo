@@ -1,4 +1,8 @@
 // fork from https://github.com/react-monaco-editor/react-monaco-editor/blob/master/src/editor.js
+(window as any).MonacoEnvironment = {
+  ...(window as any).MonacoEnvironment,
+  baseUrl: '/static'
+};
 import { editor } from 'monaco-editor';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { Component } from 'react';

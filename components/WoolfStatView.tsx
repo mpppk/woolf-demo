@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -16,6 +17,7 @@ const DynamicReactJson = dynamic(import('react-json-view'), { ssr: false });
 interface IWoolfStatProps {
   jobStat: IJobStat;
   funcStat: JobFuncStat;
+  onClickCode: (func: (...args) => any) => void;
 }
 
 const to2ColumnTableRow = (col1: string, col2: string) => {
@@ -83,6 +85,12 @@ const funcStatToFunctionParameterRow = (funcStat?: JobFuncStat) => {
 
 // tslint:disable-next-line variable-name
 export const WoolfStatView: FunctionComponent<IWoolfStatProps> = props => {
+  const handleClick = () => {
+    // FIXME
+    const dummyHandler = () => console.log('hello');
+    props.onClickCode(dummyHandler);
+  };
+
   return (
     <Paper>
       <Table>
@@ -95,6 +103,12 @@ export const WoolfStatView: FunctionComponent<IWoolfStatProps> = props => {
           {funcStatToFunctionOutputPathRow(props.funcStat)}
           {funcStatToFunctionResultPathRow(props.funcStat)}
           {funcStatToFunctionParameterRow(props.funcStat)}
+          <TableRow>
+            <TableCell scope="row">Code</TableCell>
+            <TableCell scope="row">
+              <Button onClick={handleClick}>Open</Button>
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </Paper>

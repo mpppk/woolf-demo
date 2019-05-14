@@ -1,4 +1,6 @@
 import { Button } from '@material-ui/core';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography/Typography';
 import dynamic from 'next/dynamic';
 import React from 'react';
@@ -27,7 +29,11 @@ type IndexProps = {
   currentStat: IUpdateCurrentStatPayload;
 } & WoolfActionCreators;
 
-class Index extends React.Component<IndexProps> {
+interface IndexState {
+  tabValue: 0;
+}
+
+class Index extends React.Component<IndexProps, IndexState> {
   // tslint:disable-next-line member-access
   static async getInitialProps(props) {
     const { store, isServer } = props.ctx;
@@ -40,6 +46,8 @@ class Index extends React.Component<IndexProps> {
     this.handleClickRunButton = this.handleClickRunButton.bind(this);
     this.handleClickFuncNode = this.handleClickFuncNode.bind(this);
     this.handleClickJobNode = this.handleClickJobNode.bind(this);
+    this.handleClickTab = this.handleClickTab.bind(this);
+    this.state = { tabValue: 0 };
   }
 
   // tslint:disable-next-line member-access
@@ -61,6 +69,11 @@ class Index extends React.Component<IndexProps> {
       '}'
     ].join('\n');
 
+    const handleClickCode = func => {
+      func();
+    };
+
+    // @ts-ignore
     return (
       <div>
         <AppBar />
@@ -74,20 +87,33 @@ class Index extends React.Component<IndexProps> {
           onClickFuncNode={this.handleClickFuncNode}
           onClickJobNode={this.handleClickJobNode}
         />
-        <WoolfStatView
-          jobStat={this.props.currentStat.jobStat}
-          funcStat={this.props.currentStat.funcStat}
-        />
         <Button variant="contained" onClick={this.handleClickRunButton}>
           Run
         </Button>
-        <FunctionEditor language="javascript" value={someJs} />
+        <Tabs value={this.state.tabValue} onChange={this.handleClickTab}>
+          <Tab label="Info" />
+          <Tab label="Code" />
+        </Tabs>
+        {this.state.tabValue === 0 && (
+          <WoolfStatView
+            jobStat={this.props.currentStat.jobStat}
+            funcStat={this.props.currentStat.funcStat}
+            onClickCode={handleClickCode}
+          />
+        )}
+        {this.state.tabValue === 1 && (
+          <FunctionEditor language="javascript" value={someJs} />
+        )}
       </div>
     );
   }
 
   private async handleClickRunButton() {
     this.props.requestToRun();
+  }
+
+  private handleClickTab(_event: React.ChangeEvent<{}>, tabValue: any) {
+    this.setState({ ...this.state, tabValue });
   }
 }
 
@@ -103,6 +129,7 @@ const mapDispatchToProps = (dispatch): WoolfActionCreators => {
     ...bindActionCreators({ ...woolfActionCreators }, dispatch) // FIXME
   };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

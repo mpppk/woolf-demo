@@ -11,7 +11,7 @@
     "tslint:prettier-check": "tslint-config-prettier-check ./tslint.json"
   },
   "dependencies": {
-    "@material-ui/core": "^3.8.1",
+    "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.1",
     "@material-ui/styles": "^3.0.0-alpha.6",
     "@zeit/next-css": "^1.0.1",

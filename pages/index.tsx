@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Typography from '@material-ui/core/Typography/Typography';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -18,6 +18,7 @@ import AppBar from '../components/AppBar';
 import { WoolfStatView } from '../components/WoolfStatView';
 import { WoolfView } from '../components/WoolfView';
 import { State } from '../reducer';
+import Grid from '@material-ui/core/Grid';
 
 // tslint:disable-next-line
 const FunctionEditor = dynamic(import('../components/FunctionEditor'), {
@@ -77,33 +78,40 @@ class Index extends React.Component<IndexProps, IndexState> {
     return (
       <div>
         <AppBar />
-        <Typography variant="h2" gutterBottom={true}>
-          Index Page
-        </Typography>
-        <WoolfView
-          width={800}
-          height={500}
-          stats={this.props.stats}
-          onClickFuncNode={this.handleClickFuncNode}
-          onClickJobNode={this.handleClickJobNode}
-        />
+        <Grid container={true} spacing={24}>
+          <Grid item={true} xs={8}>
+            <Paper>
+              <WoolfView
+                width={800}
+                height={500}
+                stats={this.props.stats}
+                onClickFuncNode={this.handleClickFuncNode}
+                onClickJobNode={this.handleClickJobNode}
+              />
+            </Paper>
+          </Grid>
+          <Grid item={true} xs={4}>
+            <Paper>
+              <Tabs value={this.state.tabValue} onChange={this.handleClickTab}>
+                <Tab label="Info" />
+                <Tab label="Code" />
+              </Tabs>
+              {this.state.tabValue === 0 && (
+                <WoolfStatView
+                  jobStat={this.props.currentStat.jobStat}
+                  funcStat={this.props.currentStat.funcStat}
+                  onClickCode={handleClickCode}
+                />
+              )}
+              {this.state.tabValue === 1 && (
+                <FunctionEditor language="javascript" value={someJs} />
+              )}
+            </Paper>
+          </Grid>
+        </Grid>
         <Button variant="contained" onClick={this.handleClickRunButton}>
           Run
         </Button>
-        <Tabs value={this.state.tabValue} onChange={this.handleClickTab}>
-          <Tab label="Info" />
-          <Tab label="Code" />
-        </Tabs>
-        {this.state.tabValue === 0 && (
-          <WoolfStatView
-            jobStat={this.props.currentStat.jobStat}
-            funcStat={this.props.currentStat.funcStat}
-            onClickCode={handleClickCode}
-          />
-        )}
-        {this.state.tabValue === 1 && (
-          <FunctionEditor language="javascript" value={someJs} />
-        )}
       </div>
     );
   }

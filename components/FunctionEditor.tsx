@@ -1,7 +1,13 @@
 import * as React from 'react';
 import MonacoEditor from './Monaco';
 
-export default _props => {
+export interface FunctionEditorProps {
+  language: 'javascript' | 'json'; // FIXME
+  value: string;
+  theme: 'vs-dark'; // FIXME
+}
+
+export default (props: FunctionEditorProps) => {
   const nullHandler = () => null;
 
   const options = {
@@ -16,9 +22,9 @@ export default _props => {
     <MonacoEditor
       width={500}
       height={200}
-      language="javascript"
-      theme="vs-dark"
-      value="console.log('hoge');"
+      language={props.language}
+      theme={props.theme}
+      value={props.value}
       options={options}
       onChange={nullHandler}
       editorDidMount={nullHandler}

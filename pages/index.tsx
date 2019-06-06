@@ -1,4 +1,5 @@
 import { Button } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
@@ -18,7 +19,6 @@ import AppBar from '../components/AppBar';
 import { WoolfStatView } from '../components/WoolfStatView';
 import { WoolfView } from '../components/WoolfView';
 import { State } from '../reducer';
-import Grid from '@material-ui/core/Grid';
 
 // tslint:disable-next-line
 const FunctionEditor = dynamic(import('../components/FunctionEditor'), {
@@ -63,16 +63,11 @@ class Index extends React.Component<IndexProps, IndexState> {
 
   // tslint:disable-next-line member-access
   render() {
-    const someJs = [
-      "import {myCoolFunc} from './utils'",
-      'export default async () => {',
-      '  await myCoolFunc()',
-      '}'
-    ].join('\n');
-
     const handleClickCode = func => {
       func();
     };
+    const funcStat = this.props.currentStat.funcStat;
+    const code = funcStat && funcStat.Code ? funcStat.Code : '<empty>';
 
     // @ts-ignore
     return (
@@ -104,7 +99,11 @@ class Index extends React.Component<IndexProps, IndexState> {
                 />
               )}
               {this.state.tabValue === 1 && (
-                <FunctionEditor language="javascript" value={someJs} />
+                <FunctionEditor
+                  theme="vs-dark"
+                  language="javascript"
+                  value={code.toString()}
+                />
               )}
             </Paper>
           </Grid>

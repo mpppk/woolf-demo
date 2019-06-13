@@ -6,9 +6,11 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
+    "test": "jest",
     "pretty-quick": "pretty-quick",
     "precommit": "pretty-quick --staged",
-    "tslint:prettier-check": "tslint-config-prettier-check ./tslint.json"
+    "tslint:prettier-check": "tslint-config-prettier-check ./tslint.json",
+    "export": "npm run build && next export"
   },
   "resolutions": {
     "d3-selection": "1.3.0"

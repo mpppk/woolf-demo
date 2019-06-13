@@ -64,4 +64,4 @@ class MyApp extends App<IAppProps> {
   }
 }
 
-export default withRedux(createStore)(withReduxSaga({ async: true })(MyApp));
+export default withRedux(createStore)(withReduxSaga(MyApp));

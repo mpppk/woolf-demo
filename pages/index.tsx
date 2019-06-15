@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import dynamic from 'next/dynamic';
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { JobFuncStat } from 'woolf/src/job';
@@ -73,7 +73,7 @@ class Index extends React.Component<IndexProps, IndexState> {
     return (
       <div>
         <AppBar />
-        <Grid container={true} spacing={24}>
+        <Grid container={true} spacing={2}>
           <Grid item={true} xs={8}>
             <Paper>
               <WoolfView

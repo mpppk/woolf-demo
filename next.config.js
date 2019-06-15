@@ -9,11 +9,13 @@ module.exports = withCSS(
         fs: 'empty'
       };
 
-      config.externals = {
-        child_process: 'child_process',
-        os: 'os',
-        worker_threads: 'worker_threads'
-      };
+      if (!options.isServer) {
+        config.externals = {
+          child_process: 'child_process',
+          os: 'os',
+          worker_threads: 'worker_threads'
+        };
+      }
 
       config.plugins.push(
         new MonacoWebpackPlugin({

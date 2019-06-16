@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { WoolfStatView, WoolfView } from 'react-woolf';
 import { bindActionCreators } from 'redux';
 import { JobFuncStat } from 'woolf/src/job';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
@@ -16,8 +17,6 @@ import {
   woolfActionCreators
 } from '../actions';
 import AppBar from '../components/AppBar';
-import { WoolfStatView } from '../components/WoolfStatView';
-import { WoolfView } from '../components/WoolfView';
 import { State } from '../reducer';
 
 // tslint:disable-next-line
@@ -63,9 +62,6 @@ class Index extends React.Component<IndexProps, IndexState> {
 
   // tslint:disable-next-line member-access
   render() {
-    const handleClickCode = func => {
-      func();
-    };
     const funcStat = this.props.currentStat.funcStat;
     const code = funcStat && funcStat.Code ? funcStat.Code : '<empty>';
 
@@ -95,7 +91,6 @@ class Index extends React.Component<IndexProps, IndexState> {
                 <WoolfStatView
                   jobStat={this.props.currentStat.jobStat}
                   funcStat={this.props.currentStat.funcStat}
-                  onClickCode={handleClickCode}
                 />
               )}
               {this.state.tabValue === 1 && (

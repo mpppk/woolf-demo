@@ -19,27 +19,9 @@ import {
 import { bindAsyncAction } from 'typescript-fsa-redux-saga';
 import { IWoolfEventHandlers } from 'woolf/src/eventHandlers';
 import { Woolf } from 'woolf/src/woolf';
-import {
-  counterActionCreators,
-  counterAsyncActionCreators,
-  woolfActionCreators,
-  woolfAsyncActionCreators
-} from './actions';
+import { woolfActionCreators, woolfAsyncActionCreators } from './actions';
 
 es6promise.polyfill();
-
-const counterIncrementWorker = bindAsyncAction(
-  counterAsyncActionCreators.changeAmountWithSleep
-)(function*(payload): SagaIterator {
-  yield call(delay, payload.sleep);
-  return { amount: payload.amount };
-});
-
-function* watchIncrementAsync() {
-  yield takeEvery(counterActionCreators.clickAsyncIncrementButton.type, () =>
-    counterIncrementWorker({ amount: 1, sleep: 1000 })
-  );
-}
 
 function* watchWoolfNewEvent() {
   function* worker(action) {
@@ -138,9 +120,5 @@ const dummyWoolf = async (): Promise<Woolf> => {
 };
 
 export default function* rootSaga() {
-  yield all([
-    watchIncrementAsync(),
-    watchWoolfRequestToRun(),
-    watchWoolfNewEvent()
-  ]);
+  yield all([watchWoolfRequestToRun(), watchWoolfNewEvent()]);
 }

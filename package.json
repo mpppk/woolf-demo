@@ -1,12 +1,12 @@
 {
-  "name": "next-ts-redux-material",
+  "name": "woolf-demo",
   "version": "0.0.1",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "test": "jest",
+    "test": "echo 'this package does not have test yet'",
     "pretty-quick": "pretty-quick",
     "precommit": "pretty-quick --staged",
     "tslint:prettier-check": "tslint-config-prettier-check ./tslint.json",
@@ -36,6 +36,7 @@
     "react-jss": "8.6.1",
     "react-monaco-editor": "0.26.2",
     "react-redux": "7.1.0",
+    "react-woolf": "0.0.5",
     "redux": "4.0.1",
     "redux-saga": "1.0.3",
     "styled-jsx": "latest",

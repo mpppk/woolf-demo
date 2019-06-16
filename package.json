@@ -1,5 +1,5 @@
 {
-  "name": "next-ts-redux-material",
+  "name": "woolf-demo",
   "version": "0.0.1",
   "scripts": {
     "dev": "next",
@@ -36,7 +36,7 @@
     "react-jss": "8.6.1",
     "react-monaco-editor": "0.26.2",
     "react-redux": "7.1.0",
-    "react-woolf": "^0.0.4",
+    "react-woolf": "0.0.5",
     "redux": "4.0.1",
     "redux-saga": "1.0.3",
     "styled-jsx": "latest",

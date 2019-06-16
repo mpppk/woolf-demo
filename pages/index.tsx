@@ -11,7 +11,6 @@ import { bindActionCreators } from 'redux';
 import { JobFuncStat } from 'woolf/src/job';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
 import {
-  counterActionCreators,
   IUpdateCurrentStatPayload,
   WoolfActionCreators,
   woolfActionCreators
@@ -36,8 +35,7 @@ interface IndexState {
 class Index extends React.Component<IndexProps, IndexState> {
   // tslint:disable-next-line member-access
   static async getInitialProps(props) {
-    const { store, isServer } = props.ctx;
-    store.dispatch(counterActionCreators.requestAmountChanging({ amount: 1 }));
+    const { isServer } = props.ctx;
     return { isServer };
   }
 

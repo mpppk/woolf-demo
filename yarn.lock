@@ -6173,9 +6173,9 @@ react-transition-group@^4.0.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-woolf@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/react-woolf/-/react-woolf-0.0.4.tgz#cce316522b95dbf94f16994c0eb3b7e271bd0527"
+react-woolf@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-woolf/-/react-woolf-0.0.5.tgz#5964e8a198593f9e5d306c4d325e582a36c9e0af"
   dependencies:
     "@material-ui/core" "4.1.1"
     d3 "5.9.2"

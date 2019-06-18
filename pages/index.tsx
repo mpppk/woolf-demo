@@ -12,14 +12,22 @@ import {
   WoolfActionCreators,
   woolfActionCreators
 } from '../actions';
+import {
+  SampleSelectorActionCreators,
+  sampleSelectorActionCreators
+} from '../actions/sampleSelector';
 import AppBar from '../components/AppBar';
+import SampleSelector from '../components/SampleSelector';
 import StatTab from '../components/StatTab';
-import { State } from '../reducer';
+import { SampleName, State } from '../reducer';
 
 type IndexProps = {
+  availableSampleNames: SampleName[];
   stats: IJobStat[];
   currentStat: IUpdateCurrentStatPayload;
-} & WoolfActionCreators;
+  sampleName: SampleName;
+} & WoolfActionCreators &
+  SampleSelectorActionCreators;
 
 interface IndexState {
   tabValue: 0;
@@ -38,6 +46,9 @@ class Index extends React.Component<IndexProps, IndexState> {
     this.handleClickFuncNode = this.handleClickFuncNode.bind(this);
     this.handleClickJobNode = this.handleClickJobNode.bind(this);
     this.handleClickStatTab = this.handleClickStatTab.bind(this);
+    this.handleSampleSelectorChange = this.handleSampleSelectorChange.bind(
+      this
+    );
     this.state = { tabValue: 0 };
   }
 
@@ -52,6 +63,11 @@ class Index extends React.Component<IndexProps, IndexState> {
   }
 
   // tslint:disable-next-line member-access
+  handleSampleSelectorChange(selectedSampleName: SampleName) {
+    this.props.change({ selectedSampleName });
+  }
+
+  // tslint:disable-next-line member-access
   render() {
     const funcStat = this.props.currentStat.funcStat;
     const code = funcStat && funcStat.Code ? funcStat.Code : '<empty>';
@@ -61,6 +77,13 @@ class Index extends React.Component<IndexProps, IndexState> {
       <div>
         <AppBar />
         <Grid container={true} spacing={2}>
+          <Grid item={true} xs={12}>
+            <SampleSelector
+              currentSampleName={this.props.sampleName}
+              sampleNames={this.props.availableSampleNames}
+              onChange={this.handleSampleSelectorChange}
+            />
+          </Grid>
           <Grid item={true} xs={8}>
             <Paper>
               <WoolfView
@@ -102,14 +125,22 @@ class Index extends React.Component<IndexProps, IndexState> {
 
 const mapStateToProps = (state: State): Partial<IndexProps> => {
   return {
+    availableSampleNames: state.availableSampleNames,
     currentStat: state.currentStat,
+    sampleName: state.sampleName,
     stats: state.stats
   };
 };
 
 const mapDispatchToProps = (dispatch): WoolfActionCreators => {
   return {
-    ...bindActionCreators({ ...woolfActionCreators }, dispatch) // FIXME
+    ...bindActionCreators(
+      {
+        ...woolfActionCreators,
+        ...sampleSelectorActionCreators
+      },
+      dispatch
+    ) // FIXME
   };
 };
 

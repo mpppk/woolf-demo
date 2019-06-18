@@ -2,6 +2,7 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { JobFuncState } from 'woolf/src/job';
 import { IJobStat, JobState } from 'woolf/src/scheduler/scheduler';
 import { IUpdateCurrentStatPayload, woolfActionCreators } from './actions';
+import { sampleSelectorActionCreators } from './actions/sampleSelector';
 
 const stats: IJobStat[] = [
   {
@@ -62,18 +63,33 @@ const stats: IJobStat[] = [
   }
 ];
 
+export enum SampleName {
+  LocalOnly = 'LocalOnly',
+  OffloadToAWS = 'OffloadToAWS',
+  AWSOnly = 'AWSOnly'
+}
+
 export const exampleInitialState = {
+  availableSampleNames: [
+    SampleName.LocalOnly,
+    SampleName.OffloadToAWS,
+    SampleName.AWSOnly
+  ],
   count: 0,
   currentStat: {
     funcStat: null,
     jobStat: null
   } as IUpdateCurrentStatPayload,
+  sampleName: SampleName.LocalOnly,
   stats
 };
 
 export type State = typeof exampleInitialState;
 
 const reducer = reducerWithInitialState(exampleInitialState)
+  .case(sampleSelectorActionCreators.change, (state, payload) => {
+    return { ...state, sampleName: payload.selectedSampleName };
+  })
   .case(woolfActionCreators.updateCurrentStat, (state, currentStat) => {
     return { ...state, currentStat };
   })

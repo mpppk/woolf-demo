@@ -2,83 +2,48 @@
 
 import es6promise from 'es6-promise';
 import 'isomorphic-unfetch';
-import { eventChannel, SagaIterator } from 'redux-saga';
-import {
-  all,
-  call,
-  delay,
-  fork,
-  put,
-  take,
-  takeEvery,
-  takeLatest
-} from 'redux-saga/effects';
+import { SagaIterator } from 'redux-saga';
+import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { bindAsyncAction } from 'typescript-fsa-redux-saga';
-import { IWoolfEventHandlers } from 'woolf/src/eventHandlers';
 import { Woolf } from 'woolf/src/woolf';
 import { woolfActionCreators, woolfAsyncActionCreators } from './actions';
-import HelloWorldSample from './services/samples/HelloWorld';
+import { watchWoolfJobUpdate, watchWoolfNewEvent } from './sagas/woolfWatcher';
+import { get } from './services/samples/Samples';
 
 es6promise.polyfill();
 
-function* watchWoolfNewEvent() {
-  function* worker(action) {
-    yield delay(300); // FIXME pick up wait time from state
-    yield put(woolfActionCreators.updateStats({ stats: action.payload.stats }));
-  }
-  yield takeLatest(woolfActionCreators.newEvent.type, worker);
+export interface WoolfState {
+  woolf: Woolf | null;
 }
 
-// FIXME add type to emitter
-const createWoolfEventChannelHandler: (emitter: any) => IWoolfEventHandlers = (
-  emitter: any
-) => {
-  const contextEmitHandler = (type, context) => {
-    emitter({ type, context });
-  };
-  return {
-    addFunc: [contextEmitHandler],
-    addNewJob: [contextEmitHandler],
-    change: [contextEmitHandler],
-    finish: [contextEmitHandler],
-    finishFunc: [contextEmitHandler],
-    finishJob: [contextEmitHandler],
-    start: [contextEmitHandler],
-    startFunc: [contextEmitHandler],
-    startJob: [contextEmitHandler]
-  };
-};
-
-function* woolfEventHandlerChannel(woolf: Woolf) {
-  // FIXME Add type to subscribe cb
-  return eventChannel<any>(emitter => {
-    woolf.updateEventHandlers(createWoolfEventChannelHandler(emitter));
-    // FIXME Implement unsubscribe method
-    return () => {}; // tslint:disable-line
-  });
-}
+const woolfState: WoolfState = { woolf: null };
 
 const woolfRunWorker = bindAsyncAction(woolfAsyncActionCreators.run)(function*({
   payload
 }): SagaIterator {
-  const woolf = yield call(getWoolf);
-  yield put(woolfActionCreators.updateStats({ stats: woolf.stats() }));
-  yield fork(watchWoolfJobUpdate, woolf);
-  return yield call(woolf.run.bind(woolf), payload);
+  return yield call(woolfState.woolf.run.bind(woolfState.woolf), payload);
 });
 
-function* watchWoolfJobUpdate(woolf: Woolf) {
-  const chan = yield call(woolfEventHandlerChannel, woolf);
-  while (true) {
-    const { type, context } = yield take(chan);
+const woolfAssembleWorker = bindAsyncAction(woolfAsyncActionCreators.assemble)(
+  function*(payload): SagaIterator {
+    const sample = get(payload.sampleName);
+    woolfState.woolf = yield call(sample.getWoolf.bind(sample));
+    yield fork(watchWoolfJobUpdate, woolfState.woolf);
     yield put(
-      woolfActionCreators.newEvent({
-        context,
-        stats: woolf.stats(),
-        type
-      })
+      woolfActionCreators.updateStats({ stats: woolfState.woolf.stats() })
     );
   }
+);
+
+function* watchWoolfRequestToAssemble() {
+  function* worker({ payload }) {
+    yield call(woolfAssembleWorker, payload);
+  }
+
+  yield takeEvery<ReturnType<typeof woolfActionCreators.requestToAssemble>>(
+    woolfActionCreators.requestToAssemble,
+    worker
+  );
 }
 
 function* watchWoolfRequestToRun() {
@@ -93,11 +58,10 @@ function* watchWoolfRequestToRun() {
   );
 }
 
-const getWoolf = async (): Promise<Woolf> => {
-  const helloWorldSample = new HelloWorldSample();
-  return helloWorldSample.getWoolf();
-};
-
 export default function* rootSaga() {
-  yield all([watchWoolfRequestToRun(), watchWoolfNewEvent()]);
+  yield all([
+    watchWoolfRequestToRun(),
+    watchWoolfRequestToAssemble(),
+    watchWoolfNewEvent()
+  ]);
 }

@@ -51,7 +51,7 @@ class Index extends React.Component<IndexProps, IndexState> {
 
   // tslint:disable-next-line member-access
   componentDidMount(): void {
-    this.props.requestToRun();
+    this.props.requestToAssemble({ sampleName: this.props.sampleName });
   }
 
   // tslint:disable-next-line member-access

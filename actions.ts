@@ -1,8 +1,10 @@
 import actionCreatorFactory from 'typescript-fsa';
+import { Woolf } from 'woolf';
 import { WoolfEventContext } from 'woolf/src/eventHandlers';
 import { JobFuncStat } from 'woolf/src/job';
 import { IWoolfData } from 'woolf/src/models';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
+import { SampleName } from './services/samples/Samples';
 
 const woolfActionCreatorFactory = actionCreatorFactory('WOOLF');
 
@@ -23,8 +25,15 @@ export interface IUpdateCurrentStatPayload {
   funcStat?: JobFuncStat;
 }
 
+interface WoolfRequestToAssemblePayload {
+  sampleName: SampleName;
+}
+
 export const woolfActionCreators = {
   newEvent: woolfActionCreatorFactory<IWoolfNewEventPayload>('NEW_EVENT'),
+  requestToAssemble: woolfActionCreatorFactory<WoolfRequestToAssemblePayload>(
+    'REQUEST_TO_ASSEMBLE'
+  ),
   requestToRun: woolfActionCreatorFactory<WoolfRequestToRunPayload>(
     'REQUEST_TO_RUN'
   ),
@@ -43,7 +52,16 @@ export interface IWoolfRunDonePayload {
   results: IWoolfData;
 }
 
+interface IWoolfAssembleDonePayload {
+  woolf: Woolf;
+}
+
 export const woolfAsyncActionCreators = {
+  assemble: woolfActionCreatorFactory.async<
+    undefined,
+    IWoolfAssembleDonePayload,
+    undefined
+  >('ASSEMBLE'),
   run: woolfActionCreatorFactory.async<
     IWoolfRunStartedPayload,
     IWoolfRunDonePayload,

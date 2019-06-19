@@ -5,7 +5,7 @@ import Select from '@material-ui/core/Select';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import * as React from 'react';
 import { FunctionComponent } from 'react';
-import { SampleName } from '../reducer';
+import { SampleName } from '../services/samples/Samples';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

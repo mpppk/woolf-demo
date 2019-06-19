@@ -4,14 +4,10 @@ import Paper from '@material-ui/core/Paper';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { WoolfView } from 'react-woolf';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { JobFuncStat } from 'woolf/src/job';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
-import {
-  IUpdateCurrentStatPayload,
-  WoolfActionCreators,
-  woolfActionCreators
-} from '../actions';
+import { IUpdateCurrentStatPayload, woolfActionCreators } from '../actions';
 import {
   SampleSelectorActionCreators,
   sampleSelectorActionCreators
@@ -19,14 +15,15 @@ import {
 import AppBar from '../components/AppBar';
 import SampleSelector from '../components/SampleSelector';
 import StatTab from '../components/StatTab';
-import { SampleName, State } from '../reducer';
+import { State } from '../reducer';
+import { SampleName } from '../services/samples/Samples';
 
 type IndexProps = {
   availableSampleNames: SampleName[];
   stats: IJobStat[];
   currentStat: IUpdateCurrentStatPayload;
   sampleName: SampleName;
-} & WoolfActionCreators &
+} & ReturnType<typeof mapDispatchToProps> &
   SampleSelectorActionCreators;
 
 interface IndexState {
@@ -50,6 +47,11 @@ class Index extends React.Component<IndexProps, IndexState> {
       this
     );
     this.state = { tabValue: 0 };
+  }
+
+  // tslint:disable-next-line member-access
+  componentDidMount(): void {
+    this.props.requestToRun();
   }
 
   // tslint:disable-next-line member-access
@@ -86,13 +88,15 @@ class Index extends React.Component<IndexProps, IndexState> {
           </Grid>
           <Grid item={true} xs={8}>
             <Paper>
-              <WoolfView
-                width={800}
-                height={500}
-                stats={this.props.stats}
-                onClickFuncNode={this.handleClickFuncNode}
-                onClickJobNode={this.handleClickJobNode}
-              />
+              {this.props.stats.length > 0 && (
+                <WoolfView
+                  width={800}
+                  height={500}
+                  stats={this.props.stats}
+                  onClickFuncNode={this.handleClickFuncNode}
+                  onClickJobNode={this.handleClickJobNode}
+                />
+              )}
             </Paper>
           </Grid>
           <Grid item={true} xs={4}>
@@ -132,7 +136,7 @@ const mapStateToProps = (state: State): Partial<IndexProps> => {
   };
 };
 
-const mapDispatchToProps = (dispatch): WoolfActionCreators => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     ...bindActionCreators(
       {

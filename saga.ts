@@ -2,9 +2,6 @@
 
 import es6promise from 'es6-promise';
 import 'isomorphic-unfetch';
-import { LambdaFunction } from 'lamool/src/lambda';
-import { Lamool } from 'lamool/src/lamool';
-import { map } from 'p-iteration';
 import { eventChannel, SagaIterator } from 'redux-saga';
 import {
   all,
@@ -20,6 +17,7 @@ import { bindAsyncAction } from 'typescript-fsa-redux-saga';
 import { IWoolfEventHandlers } from 'woolf/src/eventHandlers';
 import { Woolf } from 'woolf/src/woolf';
 import { woolfActionCreators, woolfAsyncActionCreators } from './actions';
+import HelloWorldSample from './services/samples/HelloWorld';
 
 es6promise.polyfill();
 
@@ -63,7 +61,7 @@ function* woolfEventHandlerChannel(woolf: Woolf) {
 const woolfRunWorker = bindAsyncAction(woolfAsyncActionCreators.run)(function*({
   payload
 }): SagaIterator {
-  const woolf = yield call(dummyWoolf);
+  const woolf = yield call(getWoolf);
   yield put(woolfActionCreators.updateStats({ stats: woolf.stats() }));
   yield fork(watchWoolfJobUpdate, woolf);
   return yield call(woolf.run.bind(woolf), payload);
@@ -95,28 +93,9 @@ function* watchWoolfRequestToRun() {
   );
 }
 
-const dummyWoolf = async (): Promise<Woolf> => {
-  const sleepLambdaFunction: LambdaFunction = (event, _, cb) => {
-    setTimeout(() => {
-      cb(null, event);
-    }, 2000);
-  };
-
-  const woolf = new Woolf(new Lamool());
-
-  const jobs = await map([...Array(16)], async () => {
-    const job = woolf.newJob();
-    await job.addFunc(sleepLambdaFunction);
-    return job;
-  });
-
-  const firstJob = jobs.shift();
-  const lastJob = jobs.pop();
-  jobs.forEach(job => {
-    woolf.addDependency(firstJob, job);
-    woolf.addDependency(job, lastJob);
-  });
-  return woolf;
+const getWoolf = async (): Promise<Woolf> => {
+  const helloWorldSample = new HelloWorldSample();
+  return helloWorldSample.getWoolf();
 };
 
 export default function* rootSaga() {

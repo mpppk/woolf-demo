@@ -1,87 +1,18 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { JobFuncState } from 'woolf/src/job';
-import { IJobStat, JobState } from 'woolf/src/scheduler/scheduler';
+import { IJobStat } from 'woolf';
 import { IUpdateCurrentStatPayload, woolfActionCreators } from './actions';
 import { sampleSelectorActionCreators } from './actions/sampleSelector';
-
-const stats: IJobStat[] = [
-  {
-    fromJobIDs: [] as number[],
-    funcs: [
-      {
-        FunctionName: 'test-func01',
-        state: JobFuncState.Done
-      } as any
-    ],
-    id: 0,
-    name: 'some-job',
-    state: JobState.Done,
-    toJobIDs: [1]
-  },
-  {
-    fromJobIDs: [0],
-    funcs: [
-      {
-        FunctionName: 'test-func01',
-        state: JobFuncState.Ready
-      } as any,
-      {
-        FunctionName: 'test-func06',
-        state: JobFuncState.Done
-      } as any
-    ],
-    id: 1,
-    name: 'another-job',
-    state: JobState.Ready,
-    toJobIDs: [2, 3]
-  },
-  {
-    fromJobIDs: [1],
-    funcs: [
-      {
-        FunctionName: 'test-func01',
-        state: JobFuncState.Done
-      } as any
-    ],
-    id: 2,
-    name: 'suspend-job',
-    state: JobState.Suspend,
-    toJobIDs: []
-  },
-  {
-    fromJobIDs: [2],
-    funcs: [
-      {
-        FunctionName: 'test-func01',
-        state: JobFuncState.Done
-      } as any
-    ],
-    id: 3,
-    name: 'suspend-job2',
-    state: JobState.Suspend,
-    toJobIDs: []
-  }
-];
-
-export enum SampleName {
-  LocalOnly = 'LocalOnly',
-  OffloadToAWS = 'OffloadToAWS',
-  AWSOnly = 'AWSOnly'
-}
+import * as Samples from './services/samples/Samples';
 
 export const exampleInitialState = {
-  availableSampleNames: [
-    SampleName.LocalOnly,
-    SampleName.OffloadToAWS,
-    SampleName.AWSOnly
-  ],
+  availableSampleNames: Samples.getNames(),
   count: 0,
   currentStat: {
     funcStat: null,
     jobStat: null
   } as IUpdateCurrentStatPayload,
-  sampleName: SampleName.LocalOnly,
-  stats
+  sampleName: Samples.getNames()[0],
+  stats: [] as IJobStat[]
 };
 
 export type State = typeof exampleInitialState;

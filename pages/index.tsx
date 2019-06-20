@@ -4,22 +4,27 @@ import Paper from '@material-ui/core/Paper';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { WoolfView } from 'react-woolf';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { JobFuncStat } from 'woolf/src/job';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
+import { IUpdateCurrentStatPayload, woolfActionCreators } from '../actions';
 import {
-  IUpdateCurrentStatPayload,
-  WoolfActionCreators,
-  woolfActionCreators
-} from '../actions';
+  SampleSelectorActionCreators,
+  sampleSelectorActionCreators
+} from '../actions/sampleSelector';
 import AppBar from '../components/AppBar';
+import SampleSelector from '../components/SampleSelector';
 import StatTab from '../components/StatTab';
 import { State } from '../reducer';
+import { SampleName } from '../services/samples/Samples';
 
 type IndexProps = {
+  availableSampleNames: SampleName[];
   stats: IJobStat[];
   currentStat: IUpdateCurrentStatPayload;
-} & WoolfActionCreators;
+  sampleName: SampleName;
+} & ReturnType<typeof mapDispatchToProps> &
+  SampleSelectorActionCreators;
 
 interface IndexState {
   tabValue: 0;
@@ -38,7 +43,15 @@ class Index extends React.Component<IndexProps, IndexState> {
     this.handleClickFuncNode = this.handleClickFuncNode.bind(this);
     this.handleClickJobNode = this.handleClickJobNode.bind(this);
     this.handleClickStatTab = this.handleClickStatTab.bind(this);
+    this.handleSampleSelectorChange = this.handleSampleSelectorChange.bind(
+      this
+    );
     this.state = { tabValue: 0 };
+  }
+
+  // tslint:disable-next-line member-access
+  componentDidMount(): void {
+    this.props.requestToAssemble({ sampleName: this.props.sampleName });
   }
 
   // tslint:disable-next-line member-access
@@ -52,6 +65,11 @@ class Index extends React.Component<IndexProps, IndexState> {
   }
 
   // tslint:disable-next-line member-access
+  handleSampleSelectorChange(selectedSampleName: SampleName) {
+    this.props.change({ selectedSampleName });
+  }
+
+  // tslint:disable-next-line member-access
   render() {
     const funcStat = this.props.currentStat.funcStat;
     const code = funcStat && funcStat.Code ? funcStat.Code : '<empty>';
@@ -61,15 +79,24 @@ class Index extends React.Component<IndexProps, IndexState> {
       <div>
         <AppBar />
         <Grid container={true} spacing={2}>
+          <Grid item={true} xs={12}>
+            <SampleSelector
+              currentSampleName={this.props.sampleName}
+              sampleNames={this.props.availableSampleNames}
+              onChange={this.handleSampleSelectorChange}
+            />
+          </Grid>
           <Grid item={true} xs={8}>
             <Paper>
-              <WoolfView
-                width={800}
-                height={500}
-                stats={this.props.stats}
-                onClickFuncNode={this.handleClickFuncNode}
-                onClickJobNode={this.handleClickJobNode}
-              />
+              {this.props.stats.length > 0 && (
+                <WoolfView
+                  width={800}
+                  height={500}
+                  stats={this.props.stats}
+                  onClickFuncNode={this.handleClickFuncNode}
+                  onClickJobNode={this.handleClickJobNode}
+                />
+              )}
             </Paper>
           </Grid>
           <Grid item={true} xs={4}>
@@ -102,14 +129,22 @@ class Index extends React.Component<IndexProps, IndexState> {
 
 const mapStateToProps = (state: State): Partial<IndexProps> => {
   return {
+    availableSampleNames: state.availableSampleNames,
     currentStat: state.currentStat,
+    sampleName: state.sampleName,
     stats: state.stats
   };
 };
 
-const mapDispatchToProps = (dispatch): WoolfActionCreators => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    ...bindActionCreators({ ...woolfActionCreators }, dispatch) // FIXME
+    ...bindActionCreators(
+      {
+        ...woolfActionCreators,
+        ...sampleSelectorActionCreators
+      },
+      dispatch
+    ) // FIXME
   };
 };
 

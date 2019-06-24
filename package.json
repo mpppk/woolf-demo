@@ -24,7 +24,7 @@
     "dagre-d3": "0.6.3",
     "es6-promise": "4.2.8",
     "isomorphic-unfetch": "3.0.0",
-    "lamool": "0.0.6",
+    "lamool": "0.0.7",
     "lodash": "4.17.11",
     "next": "8.1.0",
     "next-redux-saga": "4.0.2",

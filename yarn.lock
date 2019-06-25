@@ -4887,9 +4887,9 @@ lamool@0.0.6:
     jszip "^3.1.5"
     workerpool "^3.0.0"
 
-lamool@0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.7.tgz#333bbf372a800e8b83b2686cd37c3ada406a39ed"
+lamool@0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.8.tgz#ab499d91e71ac829e76d8d24dca35fc00b4e4feb"
   dependencies:
     aws-sdk "^2.387.0"
     axios "^0.19.0"

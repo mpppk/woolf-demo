@@ -7630,6 +7630,16 @@ woolf@0.0.8:
     lodash "^4.17.11"
     p-iteration "^1.1.7"
 
+woolf@0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/woolf/-/woolf-0.0.9.tgz#11af2d8be24aac62dc1a2152c43b6e17b574335d"
+  dependencies:
+    aws-sdk latest
+    jsonpath "^1.0.0"
+    lamool "0.0.8"
+    lodash "^4.17.11"
+    p-iteration "^1.1.7"
+
 wordwrap@~0.0.2:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"

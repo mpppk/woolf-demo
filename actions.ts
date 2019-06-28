@@ -12,7 +12,7 @@ export interface IWoolfUpdatePayload {
   stats: IJobStat[];
 }
 
-export type WoolfRequestToRunPayload = undefined;
+export type WoolfRequestToRunPayload = IWoolfData;
 
 export interface IWoolfNewEventPayload {
   stats: IJobStat[];

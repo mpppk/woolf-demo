@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { WoolfView } from 'react-woolf';
 import { bindActionCreators, Dispatch } from 'redux';
 import { JobFuncStat } from 'woolf/src/job';
+import { IWoolfData } from 'woolf/src/models';
 import { IJobStat } from 'woolf/src/scheduler/scheduler';
 import { IUpdateCurrentStatPayload, woolfActionCreators } from '../actions';
 import {
@@ -22,6 +23,7 @@ type IndexProps = {
   availableSampleNames: SampleName[];
   stats: IJobStat[];
   currentStat: IUpdateCurrentStatPayload;
+  runPayload: IWoolfData;
   sampleName: SampleName;
 } & ReturnType<typeof mapDispatchToProps> &
   SampleSelectorActionCreators;
@@ -43,6 +45,8 @@ class Index extends React.Component<IndexProps, IndexState> {
     this.handleClickFuncNode = this.handleClickFuncNode.bind(this);
     this.handleClickJobNode = this.handleClickJobNode.bind(this);
     this.handleClickStatTab = this.handleClickStatTab.bind(this);
+    this.handleClickInputNode = this.handleClickInputNode.bind(this);
+    this.handleClickOutputNode = this.handleClickOutputNode.bind(this);
     this.handleSampleSelectorChange = this.handleSampleSelectorChange.bind(
       this
     );
@@ -67,6 +71,18 @@ class Index extends React.Component<IndexProps, IndexState> {
   // tslint:disable-next-line member-access
   handleSampleSelectorChange(selectedSampleName: SampleName) {
     this.props.change({ selectedSampleName });
+  }
+
+  // tslint:disable-next-line member-access
+  handleClickInputNode() {
+    // tslint:disable-next-line no-console
+    console.log('handleClickInputNode'); // FIXME
+  }
+
+  // tslint:disable-next-line member-access
+  handleClickOutputNode() {
+    // tslint:disable-next-line no-console
+    console.log('handleClickOutputNode'); // FIXME
   }
 
   // tslint:disable-next-line member-access
@@ -95,6 +111,11 @@ class Index extends React.Component<IndexProps, IndexState> {
                   stats={this.props.stats}
                   onClickFuncNode={this.handleClickFuncNode}
                   onClickJobNode={this.handleClickJobNode}
+                  onClickInputNode={this.handleClickInputNode}
+                  onClickOutputNode={this.handleClickOutputNode}
+                  showInput={true}
+                  inputNodeLabel={JSON.stringify(this.props.runPayload)}
+                  showOutput={true}
                 />
               )}
             </Paper>
@@ -119,7 +140,7 @@ class Index extends React.Component<IndexProps, IndexState> {
   }
 
   private async handleClickRunButton() {
-    this.props.requestToRun();
+    this.props.requestToRun({});
   }
 
   private handleClickStatTab(tabValue: any) {
@@ -131,6 +152,7 @@ const mapStateToProps = (state: State): Partial<IndexProps> => {
   return {
     availableSampleNames: state.availableSampleNames,
     currentStat: state.currentStat,
+    runPayload: state.runPayload,
     sampleName: state.sampleName,
     stats: state.stats
   };

@@ -821,29 +821,6 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@material-ui/core@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.1.1.tgz#11e703f3d44d84750c9b829f13bb08ad8949e12a"
-  dependencies:
-    "@babel/runtime" "^7.2.0"
-    "@material-ui/styles" "^4.1.1"
-    "@material-ui/system" "^4.2.0"
-    "@material-ui/types" "^4.1.0"
-    "@material-ui/utils" "^4.1.0"
-    "@types/react-transition-group" "^2.0.16"
-    clsx "^1.0.2"
-    convert-css-length "^2.0.0"
-    debounce "^1.1.0"
-    deepmerge "^3.0.0"
-    hoist-non-react-statics "^3.2.1"
-    is-plain-object "^3.0.0"
-    normalize-scroll-left "^0.2.0"
-    popper.js "^1.14.1"
-    prop-types "^15.7.2"
-    react-event-listener "^0.6.6"
-    react-transition-group "^4.0.0"
-    warning "^4.0.1"
-
 "@material-ui/core@4.1.3":
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.1.3.tgz#0f8ffae88ac668399fbfc66efa1ed37c4ce29a7d"
@@ -896,38 +873,6 @@
     prop-types "^15.7.2"
     warning "^4.0.1"
 
-"@material-ui/styles@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.1.1.tgz#16e9d4770bd18b85c25fd3cb925043af5fa37f36"
-  dependencies:
-    "@babel/runtime" "^7.2.0"
-    "@emotion/hash" "^0.7.1"
-    "@material-ui/types" "^4.1.0"
-    "@material-ui/utils" "^4.1.0"
-    clsx "^1.0.2"
-    csstype "^2.5.2"
-    deepmerge "^3.0.0"
-    hoist-non-react-statics "^3.2.1"
-    jss "10.0.0-alpha.17"
-    jss-plugin-camel-case "10.0.0-alpha.17"
-    jss-plugin-default-unit "10.0.0-alpha.17"
-    jss-plugin-global "10.0.0-alpha.17"
-    jss-plugin-nested "10.0.0-alpha.17"
-    jss-plugin-props-sort "10.0.0-alpha.17"
-    jss-plugin-rule-value-function "10.0.0-alpha.17"
-    jss-plugin-vendor-prefixer "10.0.0-alpha.17"
-    prop-types "^15.7.2"
-    warning "^4.0.1"
-
-"@material-ui/system@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.2.0.tgz#1c0759f1168bf871a7970239dc781b7bf9dfd010"
-  dependencies:
-    "@babel/runtime" "^7.2.0"
-    deepmerge "^3.0.0"
-    prop-types "^15.7.2"
-    warning "^4.0.1"
-
 "@material-ui/system@^4.3.0":
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.3.0.tgz#6812049bf9257f8936c5de8f18b7142a67048247"
@@ -936,10 +881,6 @@
     deepmerge "^3.0.0"
     prop-types "^15.7.2"
     warning "^4.0.1"
-
-"@material-ui/types@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@material-ui/types/-/types-4.1.0.tgz#58e60d86f5a554e60c06a4a91f2030ac2c56a5fd"
 
 "@material-ui/types@^4.1.1":
   version "4.1.1"
@@ -1832,13 +1773,6 @@ aws-sign2@~0.7.0:
 aws4@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
-
-axios@^0.18.0:
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
-  dependencies:
-    follow-redirects "1.5.10"
-    is-buffer "^2.0.2"
 
 axios@^0.19.0:
   version "0.19.0"
@@ -2898,9 +2832,9 @@ d3-zoom@1.7.1:
     d3-selection "1"
     d3-transition "1"
 
-d3@5.9.2:
-  version "5.9.2"
-  resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.2.tgz#64e8a7e9c3d96d9e6e4999d2c8a2c829767e67f5"
+d3@5.9.5:
+  version "5.9.5"
+  resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.5.tgz#18d4e33cd725016cfb41c04a65c31c1c5addea81"
   dependencies:
     d3-array "1"
     d3-axis "1"
@@ -4870,15 +4804,6 @@ kleur@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
 
-lamool@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.6.tgz#74051ddb49ee905f07426ab1072914852cb0559c"
-  dependencies:
-    aws-sdk "^2.387.0"
-    axios "^0.18.0"
-    jszip "^3.1.5"
-    workerpool "^3.0.0"
-
 lamool@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.8.tgz#ab499d91e71ac829e76d8d24dca35fc00b4e4feb"
@@ -5228,7 +5153,11 @@ monaco-editor-webpack-plugin@1.7.0:
   dependencies:
     "@types/webpack" "^4.4.19"
 
-monaco-editor@0.17.0, monaco-editor@^0.17.0:
+monaco-editor@0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.17.1.tgz#8fbe96ca54bfa75262706e044f8f780e904aa45c"
+
+monaco-editor@^0.17.0:
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.17.0.tgz#d1d035c6f512ab88503cbee8213cab34b85ab954"
 
@@ -6250,20 +6179,20 @@ react-transition-group@^4.0.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-woolf@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/react-woolf/-/react-woolf-0.0.6.tgz#034c7ce68931a486f72ed18439412ab0745ff46f"
+react-woolf@0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/react-woolf/-/react-woolf-0.0.7.tgz#f377f42341807fa04b9bc38b4a781c7d4e6bd868"
   dependencies:
-    "@material-ui/core" "4.1.1"
-    d3 "5.9.2"
+    "@material-ui/core" "4.1.3"
+    d3 "5.9.5"
     dagre "0.8.4"
     dagre-d3 "0.6.3"
-    monaco-editor "0.17.0"
+    monaco-editor "0.17.1"
     react "16.8.6"
     react-fast-compare "2.0.4"
     react-json-tree "0.11.2"
     react-json-view "1.19.1"
-    woolf "0.0.8"
+    woolf "0.0.10"
 
 react@16.8.6:
   version "16.8.6"
@@ -7628,16 +7557,6 @@ woolf@0.0.10:
     aws-sdk latest
     jsonpath "^1.0.0"
     lamool "0.0.8"
-    lodash "^4.17.11"
-    p-iteration "^1.1.7"
-
-woolf@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/woolf/-/woolf-0.0.8.tgz#abb1f85a7615f2a4f852df4433f29c065dfaa3c7"
-  dependencies:
-    aws-sdk latest
-    jsonpath "^1.0.0"
-    lamool "0.0.6"
     lodash "^4.17.11"
     p-iteration "^1.1.7"
 

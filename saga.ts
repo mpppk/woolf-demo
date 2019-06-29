@@ -6,7 +6,11 @@ import { SagaIterator } from 'redux-saga';
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { bindAsyncAction } from 'typescript-fsa-redux-saga';
 import { Woolf } from 'woolf/src/woolf';
-import { woolfActionCreators, woolfAsyncActionCreators } from './actions';
+import {
+  IWoolfRunDonePayload,
+  woolfActionCreators,
+  woolfAsyncActionCreators
+} from './actions';
 import { watchWoolfJobUpdate, watchWoolfNewEvent } from './sagas/woolfWatcher';
 import { get } from './services/samples/Samples';
 
@@ -21,7 +25,11 @@ const woolfState: WoolfState = { woolf: null };
 const woolfRunWorker = bindAsyncAction(woolfAsyncActionCreators.run)(function*({
   payload
 }): SagaIterator {
-  return yield call(woolfState.woolf.run.bind(woolfState.woolf), payload);
+  const woolfResults = (yield call(
+    woolfState.woolf.run.bind(woolfState.woolf),
+    payload
+  )) as IWoolfRunDonePayload;
+  return { woolfResults };
 });
 
 const woolfAssembleWorker = bindAsyncAction(woolfAsyncActionCreators.assemble)(

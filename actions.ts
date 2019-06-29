@@ -49,7 +49,7 @@ export interface IWoolfRunStartedPayload {
 }
 
 export interface IWoolfRunDonePayload {
-  results: IWoolfData;
+  woolfResults: IWoolfData[];
 }
 
 interface IWoolfAssembleDonePayload {

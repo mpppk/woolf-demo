@@ -18,7 +18,8 @@ export const exampleInitialState = {
   } as IUpdateCurrentStatPayload,
   runPayload: {} as IWoolfData,
   sampleName: Samples.getNames()[0],
-  stats: [] as IJobStat[]
+  stats: [] as IJobStat[],
+  woolfResults: [] as IWoolfData[]
 };
 
 export type State = typeof exampleInitialState;
@@ -32,6 +33,9 @@ const reducer = reducerWithInitialState(exampleInitialState)
   })
   .case(woolfAsyncActionCreators.run.started, (state, runPayload) => {
     return { ...state, runPayload };
+  })
+  .case(woolfAsyncActionCreators.run.done, (state, payload) => {
+    return { ...state, woolfResults: payload.result.woolfResults };
   })
   .case(woolfActionCreators.updateStats, (state, payload) => {
     const noFuncsStat = state.stats.find(

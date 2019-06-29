@@ -23,6 +23,7 @@ type IndexProps = {
   availableSampleNames: SampleName[];
   stats: IJobStat[];
   currentStat: IUpdateCurrentStatPayload;
+  woolfResults: IWoolfData[];
   runPayload: IWoolfData;
   sampleName: SampleName;
 } & ReturnType<typeof mapDispatchToProps> &
@@ -115,6 +116,7 @@ class Index extends React.Component<IndexProps, IndexState> {
                   onClickOutputNode={this.handleClickOutputNode}
                   showInput={true}
                   inputNodeLabel={JSON.stringify(this.props.runPayload)}
+                  outputNodeLabel={JSON.stringify(this.props.woolfResults)}
                   showOutput={true}
                 />
               )}
@@ -154,7 +156,8 @@ const mapStateToProps = (state: State): Partial<IndexProps> => {
     currentStat: state.currentStat,
     runPayload: state.runPayload,
     sampleName: state.sampleName,
-    stats: state.stats
+    stats: state.stats,
+    woolfResults: state.woolfResults
   };
 };
 

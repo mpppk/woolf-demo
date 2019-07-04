@@ -36,7 +36,7 @@
     "react-jss": "8.6.1",
     "react-monaco-editor": "0.26.2",
     "react-redux": "7.1.0",
-    "react-woolf": "0.0.7",
+    "react-woolf": "0.0.8",
     "redux": "4.0.1",
     "redux-saga": "1.0.4",
     "styled-jsx": "latest",

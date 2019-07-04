@@ -2832,9 +2832,9 @@ d3-zoom@1.7.1:
     d3-selection "1"
     d3-transition "1"
 
-d3@5.9.5:
-  version "5.9.5"
-  resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.5.tgz#18d4e33cd725016cfb41c04a65c31c1c5addea81"
+d3@5.9.7:
+  version "5.9.7"
+  resolved "https://registry.yarnpkg.com/d3/-/d3-5.9.7.tgz#f3835648a172b438e89ed57eb6c525bdabdcd7dc"
   dependencies:
     d3-array "1"
     d3-axis "1"
@@ -4804,15 +4804,6 @@ kleur@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
 
-lamool@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.8.tgz#ab499d91e71ac829e76d8d24dca35fc00b4e4feb"
-  dependencies:
-    aws-sdk "^2.387.0"
-    axios "^0.19.0"
-    jszip "^3.1.5"
-    workerpool "^3.0.0"
-
 lamool@0.0.9:
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.9.tgz#da1f0fe2879a854b624a2dc17be610e4762d6fe1"
@@ -6188,12 +6179,12 @@ react-transition-group@^4.0.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-woolf@0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/react-woolf/-/react-woolf-0.0.7.tgz#f377f42341807fa04b9bc38b4a781c7d4e6bd868"
+react-woolf@0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-woolf/-/react-woolf-0.0.8.tgz#8cb412602e7426a5e160946835fc01cc99328ef5"
   dependencies:
     "@material-ui/core" "4.1.3"
-    d3 "5.9.5"
+    d3 "5.9.7"
     dagre "0.8.4"
     dagre-d3 "0.6.3"
     monaco-editor "0.17.1"
@@ -6201,7 +6192,7 @@ react-woolf@0.0.7:
     react-fast-compare "2.0.4"
     react-json-tree "0.11.2"
     react-json-view "1.19.1"
-    woolf "0.0.10"
+    woolf "0.0.11"
 
 react@16.8.6:
   version "16.8.6"
@@ -7558,16 +7549,6 @@ wide-align@^1.1.0:
   resolved "https://registry.yarnpkg.com/wide-align/-/wide-align-1.1.3.tgz#ae074e6bdc0c14a431e804e624549c633b000457"
   dependencies:
     string-width "^1.0.2 || 2"
-
-woolf@0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/woolf/-/woolf-0.0.10.tgz#1067585968f13068b72a0ed744fe7b8f9576314f"
-  dependencies:
-    aws-sdk latest
-    jsonpath "^1.0.0"
-    lamool "0.0.8"
-    lodash "^4.17.11"
-    p-iteration "^1.1.7"
 
 woolf@0.0.11:
   version "0.0.11"

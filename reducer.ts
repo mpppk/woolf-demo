@@ -31,8 +31,8 @@ const reducer = reducerWithInitialState(exampleInitialState)
   .case(woolfActionCreators.updateCurrentStat, (state, currentStat) => {
     return { ...state, currentStat };
   })
-  .case(woolfAsyncActionCreators.run.started, (state, runPayload) => {
-    return { ...state, runPayload };
+  .case(woolfAsyncActionCreators.run.started, (state, payload) => {
+    return { ...state, runPayload: payload.payload };
   })
   .case(woolfAsyncActionCreators.run.done, (state, payload) => {
     return { ...state, woolfResults: payload.result.woolfResults };

@@ -1,5 +1,5 @@
 import actionCreatorFactory from 'typescript-fsa';
-import { SampleName } from '../reducer';
+import { SampleName } from '../services/samples/Samples';
 
 const sampleSelectorActionCreatorFactory = actionCreatorFactory(
   'SAMPLE_SELECTOR'

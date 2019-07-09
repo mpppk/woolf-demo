@@ -52,7 +52,7 @@ class MyDocument extends Document {
       ...initialProps,
       // Styles fragment is rendered after the app and page rendering finish.
       styles: [
-        <React.Fragment>
+        <React.Fragment key={0}>
           {sheets.getStyleElement()}
           {flush() || null}
         </React.Fragment>

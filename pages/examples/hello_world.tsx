@@ -1,8 +1,8 @@
 import { Button } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import * as React from 'react';
 import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { WoolfView } from 'react-woolf';
 import { IJobStat } from 'woolf';
@@ -62,7 +62,7 @@ const HelloWorld: React.FunctionComponent = () => {
           <Paper>
             {state.stats.length > 0 && (
               <WoolfView
-                width={800}
+                width={('100%' as unknown) as number} // FIXME
                 height={500}
                 stats={state.stats}
                 onClickFuncNode={handleClickFuncNode}

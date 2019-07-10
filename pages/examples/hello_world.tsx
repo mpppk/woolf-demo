@@ -8,12 +8,9 @@ import { WoolfView } from 'react-woolf';
 import { IJobStat } from 'woolf';
 import { JobFuncStat } from 'woolf/src/job';
 import { woolfActionCreators } from '../../actions';
-import { sampleSelectorActionCreators } from '../../actions/sampleSelector';
 import AppBar from '../../components/AppBar';
-import SampleSelector from '../../components/SampleSelector';
 import StatTab from '../../components/StatTab';
 import { State } from '../../reducer';
-import { SampleName } from '../../services/samples/Samples';
 
 // tslint:disable-next-line variable-name
 const HelloWorld: React.FunctionComponent = () => {
@@ -37,10 +34,6 @@ const HelloWorld: React.FunctionComponent = () => {
     dispatch(woolfActionCreators.updateCurrentStat({ jobStat }));
   };
 
-  const handleSampleSelectorChange = (selectedSampleName: SampleName) => {
-    dispatch(sampleSelectorActionCreators.change({ selectedSampleName }));
-  };
-
   const handleClickRunButton = () => {
     dispatch(woolfActionCreators.requestToRun({})); // FIXME
   };
@@ -52,11 +45,9 @@ const HelloWorld: React.FunctionComponent = () => {
       <AppBar />
       <Grid container={true} spacing={2}>
         <Grid item={true} xs={12}>
-          <SampleSelector
-            currentSampleName={state.sampleName}
-            sampleNames={state.availableSampleNames}
-            onChange={handleSampleSelectorChange}
-          />
+          <Button variant="contained" onClick={handleClickRunButton}>
+            Run
+          </Button>
         </Grid>
         <Grid item={true} xs={8}>
           <Paper>
@@ -87,9 +78,6 @@ const HelloWorld: React.FunctionComponent = () => {
           </Paper>
         </Grid>
       </Grid>
-      <Button variant="contained" onClick={handleClickRunButton}>
-        Run
-      </Button>
     </div>
   );
 };

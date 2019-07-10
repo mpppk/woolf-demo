@@ -6,7 +6,6 @@ import {
   woolfActionCreators,
   woolfAsyncActionCreators
 } from './actions';
-import { sampleSelectorActionCreators } from './actions/sampleSelector';
 import * as Samples from './services/samples/Samples';
 
 export const exampleInitialState = {
@@ -25,9 +24,6 @@ export const exampleInitialState = {
 export type State = typeof exampleInitialState;
 
 const reducer = reducerWithInitialState(exampleInitialState)
-  .case(sampleSelectorActionCreators.change, (state, payload) => {
-    return { ...state, sampleName: payload.selectedSampleName };
-  })
   .case(woolfActionCreators.updateCurrentStat, (state, currentStat) => {
     return { ...state, currentStat };
   })

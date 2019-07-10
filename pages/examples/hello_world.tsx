@@ -10,18 +10,22 @@ import { JobFuncStat } from 'woolf/src/job';
 import { woolfActionCreators } from '../../actions';
 import AppBar from '../../components/AppBar';
 import StatTab from '../../components/StatTab';
-import { State } from '../../reducer';
+import { State } from '../../reducers/root';
+import { WoolfInitialState } from '../../reducers/woolf';
+import { SampleName } from '../../services/samples/Samples';
 
 // tslint:disable-next-line variable-name
 const HelloWorld: React.FunctionComponent = () => {
-  const state = useSelector((s: State) => s);
+  const state: WoolfInitialState = useSelector((s: State) => s.woolf);
   const [tabValue, setTabValue] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (state.stats.length === 0) {
       dispatch(
-        woolfActionCreators.requestToAssemble({ sampleName: state.sampleName })
+        woolfActionCreators.requestToAssemble({
+          sampleName: SampleName.HelloWorld
+        })
       );
     }
   });

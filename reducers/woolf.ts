@@ -5,25 +5,20 @@ import {
   IUpdateCurrentStatPayload,
   woolfActionCreators,
   woolfAsyncActionCreators
-} from './actions';
-import * as Samples from './services/samples/Samples';
+} from '../actions';
 
-export const exampleInitialState = {
-  availableSampleNames: Samples.getNames(),
-  count: 0,
+export const woolfInitialState = {
   currentStat: {
     funcStat: null,
     jobStat: null
   } as IUpdateCurrentStatPayload,
   runPayload: {} as IWoolfData,
-  sampleName: Samples.getNames()[0],
   stats: [] as IJobStat[],
   woolfResults: [] as IWoolfData[]
 };
+export type WoolfInitialState = typeof woolfInitialState;
 
-export type State = typeof exampleInitialState;
-
-const reducer = reducerWithInitialState(exampleInitialState)
+const woolfReducer = reducerWithInitialState(woolfInitialState)
   .case(woolfActionCreators.updateCurrentStat, (state, currentStat) => {
     return { ...state, currentStat };
   })
@@ -43,4 +38,4 @@ const reducer = reducerWithInitialState(exampleInitialState)
     return { ...state, stats: payload.stats };
   });
 
-export default reducer;
+export default woolfReducer;

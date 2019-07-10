@@ -6,11 +6,11 @@ export enum SampleName {
   OffloadToAWSLambda = 'OffloadToAWSLambda'
 }
 
-export const getNames = () => {
+export const getSampleNames = () => {
   return [SampleName.HelloWorld, SampleName.OffloadToAWSLambda];
 };
 
-export const get = (sampleName: SampleName): BaseSample => {
+export const getSample = (sampleName: SampleName): BaseSample => {
   switch (sampleName) {
     case SampleName.HelloWorld:
       return new HelloWorldSample();

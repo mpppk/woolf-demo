@@ -12,7 +12,7 @@ import {
   woolfAsyncActionCreators
 } from './actions';
 import { watchWoolfJobUpdate, watchWoolfNewEvent } from './sagas/woolfWatcher';
-import { get } from './services/samples/Samples';
+import { getSample } from './services/samples/Samples';
 
 es6promise.polyfill();
 
@@ -34,7 +34,7 @@ const woolfRunWorker = bindAsyncAction(woolfAsyncActionCreators.run)(function*({
 
 const woolfAssembleWorker = bindAsyncAction(woolfAsyncActionCreators.assemble)(
   function*(payload): SagaIterator {
-    const sample = get(payload.sampleName);
+    const sample = getSample(payload.sampleName);
     woolfState.woolf = yield call(sample.getWoolf.bind(sample));
     yield fork(watchWoolfJobUpdate, woolfState.woolf);
     yield put(

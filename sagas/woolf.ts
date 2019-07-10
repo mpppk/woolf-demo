@@ -1,27 +1,20 @@
-/* global fetch */
-
-import es6promise from 'es6-promise';
-import 'isomorphic-unfetch';
 import { SagaIterator } from 'redux-saga';
-import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import { call, fork, put, takeEvery } from 'redux-saga/effects';
 import { bindAsyncAction } from 'typescript-fsa-redux-saga';
-import { Woolf } from 'woolf/src/woolf';
+import { Woolf } from 'woolf';
 import {
   IWoolfRunDonePayload,
   woolfActionCreators,
   woolfAsyncActionCreators
-} from './actions';
-import { watchWoolfJobUpdate, watchWoolfNewEvent } from './sagas/woolfWatcher';
-import { get } from './services/samples/Samples';
-
-es6promise.polyfill();
+} from '../actions';
+import { getSample } from '../services/samples/Samples';
+import { watchWoolfJobUpdate } from './woolfWatcher';
 
 export interface WoolfState {
   woolf: Woolf | null;
 }
 
 const woolfState: WoolfState = { woolf: null };
-
 const woolfRunWorker = bindAsyncAction(woolfAsyncActionCreators.run)(function*({
   payload
 }): SagaIterator {
@@ -34,7 +27,7 @@ const woolfRunWorker = bindAsyncAction(woolfAsyncActionCreators.run)(function*({
 
 const woolfAssembleWorker = bindAsyncAction(woolfAsyncActionCreators.assemble)(
   function*(payload): SagaIterator {
-    const sample = get(payload.sampleName);
+    const sample = getSample(payload.sampleName);
     woolfState.woolf = yield call(sample.getWoolf.bind(sample));
     yield fork(watchWoolfJobUpdate, woolfState.woolf);
     yield put(
@@ -43,7 +36,7 @@ const woolfAssembleWorker = bindAsyncAction(woolfAsyncActionCreators.assemble)(
   }
 );
 
-function* watchWoolfRequestToAssemble() {
+export function* watchWoolfRequestToAssemble() {
   function* worker({ payload }) {
     yield call(woolfAssembleWorker, payload);
   }
@@ -54,7 +47,7 @@ function* watchWoolfRequestToAssemble() {
   );
 }
 
-function* watchWoolfRequestToRun() {
+export function* watchWoolfRequestToRun() {
   function* worker({ payload }) {
     const p = { ...payload, count: 0 };
     yield call(woolfRunWorker, { payload: p });
@@ -64,12 +57,4 @@ function* watchWoolfRequestToRun() {
     woolfActionCreators.requestToRun,
     worker
   );
-}
-
-export default function* rootSaga() {
-  yield all([
-    watchWoolfRequestToRun(),
-    watchWoolfRequestToAssemble(),
-    watchWoolfNewEvent()
-  ]);
 }

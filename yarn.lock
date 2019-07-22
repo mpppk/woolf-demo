@@ -6156,9 +6156,9 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-monaco-editor@0.27.0:
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/react-monaco-editor/-/react-monaco-editor-0.27.0.tgz#2dbf47b8fd4d8e4763934051f07291d9b128bb89"
+react-monaco-editor@0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/react-monaco-editor/-/react-monaco-editor-0.28.0.tgz#c69e8d0b5eaefddef73a535a69257c85d48feee9"
   dependencies:
     "@types/react" "^16.8.23"
     prop-types "^15.7.2"

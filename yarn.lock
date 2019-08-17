@@ -1367,16 +1367,9 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/react@16.9.2":
+"@types/react@16.9.2", "@types/react@^16.9.1":
   version "16.9.2"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.2.tgz#6d1765431a1ad1877979013906731aae373de268"
-  dependencies:
-    "@types/prop-types" "*"
-    csstype "^2.2.0"
-
-"@types/react@^16.8.23":
-  version "16.8.23"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.23.tgz#ec6be3ceed6353a20948169b6cb4c97b65b97ad2"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -6308,11 +6301,11 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-monaco-editor@0.28.0:
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/react-monaco-editor/-/react-monaco-editor-0.28.0.tgz#c69e8d0b5eaefddef73a535a69257c85d48feee9"
+react-monaco-editor@0.29.0:
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/react-monaco-editor/-/react-monaco-editor-0.29.0.tgz#0e3efa0264d973923e337d72ab678767aab9ac60"
   dependencies:
-    "@types/react" "^16.8.23"
+    "@types/react" "^16.9.1"
     prop-types "^15.7.2"
 
 react-redux@7.1.0:

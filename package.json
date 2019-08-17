@@ -54,7 +54,7 @@
     "@types/react": "16.9.2",
     "@types/react-dom": "16.8.5",
     "@types/react-jss": "8.6.4",
-    "@types/react-redux": "7.1.1",
+    "@types/react-redux": "7.1.2",
     "husky": "3.0.4",
     "jest": "24.9.0",
     "monaco-editor-webpack-plugin": "1.7.0",

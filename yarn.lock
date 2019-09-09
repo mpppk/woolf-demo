@@ -7780,13 +7780,13 @@ woolf@0.0.12:
     lodash "^4.17.11"
     p-iteration "^1.1.7"
 
-woolf@0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/woolf/-/woolf-0.0.13.tgz#8a9926db0007716ee2edcd621437627d37874736"
+woolf@0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/woolf/-/woolf-0.0.14.tgz#a33abb3ae6ec4e0c69cc972e62503968e67dca77"
   dependencies:
     aws-sdk latest
     jsonpath "^1.0.0"
-    lamool "0.0.9"
+    lamool "0.0.10"
     lodash "^4.17.11"
     p-iteration "^1.1.7"
 

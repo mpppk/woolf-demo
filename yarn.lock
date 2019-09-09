@@ -5034,6 +5034,15 @@ kleur@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
 
+lamool@0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.10.tgz#8598de49b13597ea4a48334d3f203439033f1257"
+  dependencies:
+    aws-sdk "^2.387.0"
+    axios "^0.19.0"
+    jszip "^3.1.5"
+    workerpool "^5.0.0"
+
 lamool@0.0.9:
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.9.tgz#da1f0fe2879a854b624a2dc17be610e4762d6fe1"
@@ -7808,6 +7817,10 @@ workerpool@^3.0.0:
     "@babel/core" "^7.3.4"
     object-assign "4.1.1"
     rsvp "^4.8.4"
+
+workerpool@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-5.0.0.tgz#5f6e882999172c4ed0acd09c3e25cc8f4516f30c"
 
 wrap-ansi@^5.1.0:
   version "5.1.0"

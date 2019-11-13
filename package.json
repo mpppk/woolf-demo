@@ -27,7 +27,7 @@
     "lamool": "0.0.11",
     "lodash": "4.17.15",
     "next": "9.0.5",
-    "next-redux-saga": "4.0.2",
+    "next-redux-saga": "4.1.0",
     "next-redux-wrapper": "2.1.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",

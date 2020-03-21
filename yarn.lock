@@ -5407,6 +5407,10 @@ monaco-editor-webpack-plugin@1.7.0:
   dependencies:
     "@types/webpack" "^4.4.19"
 
+monaco-editor@*:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.20.0.tgz#5d5009343a550124426cb4d965a4d27a348b4dea"
+
 monaco-editor@0.18.1:
   version "0.18.1"
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.18.1.tgz#ced7c305a23109875feeaf395a504b91f6358cfc"
@@ -6394,11 +6398,12 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-monaco-editor@0.34.0:
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/react-monaco-editor/-/react-monaco-editor-0.34.0.tgz#14ec8b10d448bf11f85f711ab9d91117bc46b3b8"
+react-monaco-editor@0.35.0:
+  version "0.35.0"
+  resolved "https://registry.yarnpkg.com/react-monaco-editor/-/react-monaco-editor-0.35.0.tgz#ceaaca4f292571e95957871145bd7c5f76a4fd33"
   dependencies:
     "@types/react" "^15.x || ^16.x"
+    monaco-editor "*"
     prop-types "^15.7.2"
 
 react-redux@7.2.0:

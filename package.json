@@ -16,9 +16,9 @@
     "d3-selection": "1.4.1"
   },
   "dependencies": {
-    "@material-ui/core": "4.9.9",
+    "@material-ui/core": "4.9.10",
     "@material-ui/icons": "4.9.1",
-    "@material-ui/styles": "4.9.6",
+    "@material-ui/styles": "4.9.10",
     "@zeit/next-css": "1.0.1",
     "@zeit/next-typescript": "1.1.1",
     "dagre-d3": "0.6.4",

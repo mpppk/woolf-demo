@@ -6420,9 +6420,10 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-monaco-editor@0.36.0:
-  version "0.36.0"
-  resolved "https://registry.yarnpkg.com/react-monaco-editor/-/react-monaco-editor-0.36.0.tgz#ac085c14f25fb072514c925596f6a06a711ee078"
+react-monaco-editor@0.37.0:
+  version "0.37.0"
+  resolved "https://registry.yarnpkg.com/react-monaco-editor/-/react-monaco-editor-0.37.0.tgz#1ad79a57f8bb29d656acab1d2d0b17d35723ca0f"
+  integrity sha512-4fbmTIPOfEdmAlslYPVXt+TRSd975XwgfxuSEL32efjXQwTzPZWA/Wf5qn8nYBMl+Lfdhu1DGDTLE6CZ4UOjzw==
   dependencies:
     "@types/react" "^16.x"
     monaco-editor "*"

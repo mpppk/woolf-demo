@@ -42,7 +42,7 @@
     "styled-jsx": "latest",
     "typeface-roboto": "0.0.75",
     "typescript-fsa": "3.0.0",
-    "typescript-fsa-reducers": "1.2.1",
+    "typescript-fsa-reducers": "1.2.2",
     "typescript-fsa-redux-saga": "1.1.1",
     "woolf": "0.0.14"
   },

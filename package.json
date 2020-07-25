@@ -35,7 +35,7 @@
     "react-json-view": "1.19.1",
     "react-jss": "8.6.1",
     "react-monaco-editor": "0.39.1",
-    "react-redux": "7.2.0",
+    "react-redux": "7.2.1",
     "react-woolf": "0.0.12",
     "redux": "4.0.5",
     "redux-saga": "1.0.5",

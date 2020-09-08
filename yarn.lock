@@ -1247,7 +1247,7 @@
     "@types/d3-interpolate" "*"
     "@types/d3-selection" "*"
 
-"@types/d3@5.7.2":
+"@types/d3@*", "@types/d3@5.7.2":
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/@types/d3/-/d3-5.7.2.tgz#52235eb71a1d3ca171d6dca52a58f5ccbe0254cc"
   dependencies:
@@ -1283,16 +1283,14 @@
     "@types/d3-voronoi" "*"
     "@types/d3-zoom" "*"
 
-"@types/d3@^3":
-  version "3.5.41"
-  resolved "https://registry.yarnpkg.com/@types/d3/-/d3-3.5.41.tgz#57f08fc79b75f0fecb0b3547abc22e46e9d660e4"
-
-"@types/dagre-d3@0.4.39":
-  version "0.4.39"
-  resolved "https://registry.yarnpkg.com/@types/dagre-d3/-/dagre-d3-0.4.39.tgz#bd5a05c7da366bb6e27e271f3ce1ff7cfc5b5c89"
+"@types/dagre-d3@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@types/dagre-d3/-/dagre-d3-0.6.0.tgz#16595c69c6a4c977555cab37f58cc320aa49a821"
+  integrity sha512-HHsGhdPWSGazXkvSHouIZQrH6dTq5AngSDpml/dERSYk42SzU7PdMEDyOf7ATOMkwsEzQN56iS4OPvhvlqW7LA==
   dependencies:
-    "@types/d3" "^3"
+    "@types/d3" "*"
     "@types/dagre" "*"
+    "@types/graphlib" "*"
 
 "@types/dagre@*":
   version "0.7.42"
@@ -1301,6 +1299,11 @@
 "@types/geojson@*":
   version "7946.0.7"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.7.tgz#c8fa532b60a0042219cdf173ca21a975ef0666ad"
+
+"@types/graphlib@*":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@types/graphlib/-/graphlib-2.1.7.tgz#e6a47a4f43511f5bad30058a669ce5ce93bfd823"
+  integrity sha512-K7T1n6U2HbTYu+SFHlBjz/RH74OA2D/zF1qlzn8uXbvB4uRg7knOM85ugS2bbXI1TXMh7rLqk4OVRwIwEBaixg==
 
 "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"

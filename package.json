@@ -23,7 +23,7 @@
     "@zeit/next-typescript": "1.1.1",
     "dagre-d3": "0.6.4",
     "es6-promise": "4.2.8",
-    "isomorphic-unfetch": "3.0.0",
+    "isomorphic-unfetch": "3.1.0",
     "lamool": "0.0.11",
     "lodash": "4.17.20",
     "next": "9.0.5",

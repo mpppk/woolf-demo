@@ -40,7 +40,7 @@
     "redux": "4.0.5",
     "redux-saga": "1.0.5",
     "styled-jsx": "latest",
-    "typeface-roboto": "0.0.75",
+    "typeface-roboto": "1.1.13",
     "typescript-fsa": "3.0.0",
     "typescript-fsa-reducers": "1.2.2",
     "typescript-fsa-redux-saga": "1.1.1",

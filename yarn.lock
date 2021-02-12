@@ -5214,15 +5214,6 @@ kleur@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
 
-lamool@0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.10.tgz#8598de49b13597ea4a48334d3f203439033f1257"
-  dependencies:
-    aws-sdk "^2.387.0"
-    axios "^0.19.0"
-    jszip "^3.1.5"
-    workerpool "^5.0.0"
-
 lamool@0.0.11:
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/lamool/-/lamool-0.0.11.tgz#81053dbb34e31d734038b80e3cfb330f6a168b3e"
@@ -8026,16 +8017,6 @@ wide-align@^1.1.0:
   resolved "https://registry.yarnpkg.com/wide-align/-/wide-align-1.1.3.tgz#ae074e6bdc0c14a431e804e624549c633b000457"
   dependencies:
     string-width "^1.0.2 || 2"
-
-woolf@0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/woolf/-/woolf-0.0.14.tgz#a33abb3ae6ec4e0c69cc972e62503968e67dca77"
-  dependencies:
-    aws-sdk latest
-    jsonpath "^1.0.0"
-    lamool "0.0.10"
-    lodash "^4.17.11"
-    p-iteration "^1.1.7"
 
 woolf@0.0.16:
   version "0.0.16"

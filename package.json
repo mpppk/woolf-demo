@@ -60,7 +60,7 @@
     "monaco-editor-webpack-plugin": "1.7.0",
     "prettier": "1.19.1",
     "pretty-quick": "1.11.1",
-    "redux-devtools-extension": "2.13.8",
+    "redux-devtools-extension": "2.13.9",
     "ts-jest": "24.3.0",
     "tslint": "5.20.1",
     "tslint-config-prettier": "1.18.0",

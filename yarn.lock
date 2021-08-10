@@ -1348,10 +1348,10 @@
     "@types/d3-voronoi" "*"
     "@types/d3-zoom" "^1"
 
-"@types/dagre-d3@0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@types/dagre-d3/-/dagre-d3-0.6.2.tgz#1a7ddfbbe454d96a54b252ea5df8223e0d834226"
-  integrity sha512-wnlXrCWu1Xr1etcCVkVUHr7zOmDEB0zV/Tz2+QjIAqeyHT4gD4JCqdivBPGkgsDqEMYOx6JdWxJPQ3LSdd0jHw==
+"@types/dagre-d3@0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@types/dagre-d3/-/dagre-d3-0.6.3.tgz#41e82c01f7010b7848570d18cb1407784e559a87"
+  integrity sha512-qPd9DtaIbZArKqvEXXHrY1uljoFVQs812aIMCzJPX5TulVz/jEyqD05SJT9Oaan8abszUdqUjlXom9aZvLWpew==
   dependencies:
     "@types/d3" "^5"
     "@types/dagre" "*"

@@ -26,7 +26,7 @@
     "isomorphic-unfetch": "3.1.0",
     "lamool": "0.0.11",
     "lodash": "4.17.21",
-    "next": "9.0.5",
+    "next": "9.3.2",
     "next-redux-saga": "4.1.2",
     "next-redux-wrapper": "2.1.0",
     "react": "16.14.0",
